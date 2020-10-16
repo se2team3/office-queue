@@ -1,0 +1,57 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "homepage": "https://bitbucket.org/se2team3/office-queue/src/master/",
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-scripts": "3.4.3"
+  },
+  "proxy": "http://localhost:3001",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }, "contributors": [
+      { "name" : "Alili Galib",
+        "email" : "",
+        "url" : ""
+      }, { "name" : "Antoniotti Luca",
+        "email" : "",
+        "url" : ""
+      }, { "name" : "Bitondo Federico",
+        "email" : "",
+        "url" : ""
+      }, { "name" : "Impagnatiello Giuseppina",
+        "email" : "",
+        "url" : ""
+      }, { "name" : "Piazza Dario",
+        "email" : "",
+        "url" : ""
+      }, { "name" : "Rinelli Luca",
+        "email" : "",
+        "url" : ""
+    }
+  ]
+}
