@@ -8,10 +8,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.5.0",
     "react": "^16.14.0",
-    "react-bootstrap": "^1.3.0",
     "react-dom": "^16.14.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-bootstrap": "^1.0.1"
   },
   "proxy": "http://localhost:3001",
   "scripts": {
@@ -34,25 +35,37 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }, "contributors": [
-      { "name" : "Alili Galib",
-        "email" : "",
-        "url" : ""
-      }, { "name" : "Antoniotti Luca",
-        "email" : "",
-        "url" : ""
-      }, { "name" : "Bitondo Federico",
-        "email" : "",
-        "url" : ""
-      }, { "name" : "Impagnatiello Giuseppina",
-        "email" : "",
-        "url" : ""
-      }, { "name" : "Piazza Dario",
-        "email" : "",
-        "url" : ""
-      }, { "name" : "Rinelli Luca",
-        "email" : "",
-        "url" : ""
+  },
+  "contributors": [
+    {
+      "name": "Alili Galib",
+      "email": "",
+      "url": ""
+    },
+    {
+      "name": "Antoniotti Luca",
+      "email": "",
+      "url": ""
+    },
+    {
+      "name": "Bitondo Federico",
+      "email": "",
+      "url": ""
+    },
+    {
+      "name": "Impagnatiello Giuseppina",
+      "email": "",
+      "url": ""
+    },
+    {
+      "name": "Piazza Dario",
+      "email": "",
+      "url": ""
+    },
+    {
+      "name": "Rinelli Luca",
+      "email": "",
+      "url": ""
     }
   ]
 }
