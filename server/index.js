@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // set up Routers
-app.use('/api/counters' /*only an example*/, counterRouter);
+app.use('/api/counters', counterRouter);
 
 // Error routes: keep as last routes
 //   catch 404 and forward to error handler

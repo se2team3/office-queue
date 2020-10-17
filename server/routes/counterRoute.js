@@ -7,10 +7,34 @@ const counters = require('../models/counterModel');
 
 const router = express.Router();
 
-//TODO - jsdoc's style comment
-router.post('/xxx', countersValidation.checkSomething(), validator, async (req, res) => {
-    /* async DB operation (on counters object) */
+/**
+ * Route serving login form.
+ * @name post/insert
+ * @function
+ * @param {string} path - Express path
+ * @params {callback} Validator rules - Express middleware.
+ * @param {callback} Validator middleware - Express middleware.
+ * @param {callback} Callback middleware - Express middleware.
+ */
+router.post('/insert', countersValidation.checkOperation(), validator, insertOperation);
+
+
+/* ------------------------ */
+/**
+ *
+ * @function
+ * @param req {Object} The request.
+ * @param res {Object} The response.
+ * @param req.body {Object} The JSON payload.
+ * @param req.body.description {String} The Operation Description value
+ * @return {}
+ */
+const insertOperation = async(req, res) => {
+    const id = 1;
+    const description = "SPID";
+    //await counters.insertOperations(id, description);
+
     return res.end();
-});
+};
 
 module.exports = router;

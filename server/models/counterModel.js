@@ -2,9 +2,4 @@
 // import database
 const db = require('./index');
 
-/*
-*   Template file
-*
-*   SQL queries here
-*
-* */
+// TODO - there will be db operations
