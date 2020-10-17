@@ -4,6 +4,7 @@ import './assets/App.css';
 import logo from './assets/logo.svg';
 // import API
 import API from "./API";
+import board from "./components/registerForm/board"
 // import React Routes
 /*
 import LoginPage from "routes/LoginPage";
