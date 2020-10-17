@@ -4,7 +4,7 @@ const db = require('./index');
 
 exports.createOperationsList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Operations (ID int NOT NULL PRIMARY KEY, DESCRIPTION varchar(255) NOT NULL)'
+        const sql = 'CREATE TABLE Operations (ID INTEGER NOT NULL PRIMARY KEY, DESCRIPTION varchar(255) NOT NULL)'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -28,7 +28,7 @@ exports.insertOperations = function(id, description) {
 
 exports.createCountersList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Counters (ID int NOT NULL PRIMARY KEY)'
+        const sql = 'CREATE TABLE Counters (ID INTEGER NOT NULL PRIMARY KEY)'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -52,7 +52,7 @@ exports.insertCounters = function(id) {
 
 exports.createCountersOperationsList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Counters_Operations (ID int NOT NULL PRIMARY KEY, COUNTER_ID int NOT NULL, OPERATION_ID int NOT NULL, FOREIGN KEY(COUNTER_ID) REFERENCES Counters(ID),FOREIGN KEY(OPERATION_ID) REFERENCES Operations(ID))'
+        const sql = 'CREATE TABLE Counters_Operations (ID INTEGER NOT NULL PRIMARY KEY, COUNTER_ID int NOT NULL, OPERATION_ID int NOT NULL, FOREIGN KEY(COUNTER_ID) REFERENCES Counters(ID),FOREIGN KEY(OPERATION_ID) REFERENCES Operations(ID))'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
