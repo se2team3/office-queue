@@ -7,34 +7,29 @@ const counters = require('../models/counterModel');
 
 const router = express.Router();
 
+const log = async(req, res, next) => {
+    console.log(req);
+    next();
+}
+
 /**
- * Route serving login form.
- * @name post/insert
- * @function
- * @param {string} path - Express path
- * @params {callback} Validator rules - Express middleware.
- * @param {callback} Validator middleware - Express middleware.
- * @param {callback} Callback middleware - Express middleware.
+ * POST
+ * BODY: {description}
+ * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
-router.post('/insert', countersValidation.checkOperation(), validator, insertOperation);
+router.post(`/operations/insert`, log, countersValidation.checkOperation(), validator, async(req, res) => {
+    await counters.insertOperations(req.body.description);
+    return res.status(201).end();
+});
 
-
-/* ------------------------ */
 /**
- *
- * @function
- * @param req {Object} The request.
- * @param res {Object} The response.
- * @param req.body {Object} The JSON payload.
- * @param req.body.description {String} The Operation Description value
- * @return {}
+ * POST
+ * BODY: {id}
+ * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
-const insertOperation = async(req, res) => {
-    const id = 1;
-    const description = "SPID";
-    //await counters.insertOperations(id, description);
-
-    return res.end();
-};
+router.post(`/counters/insert`, log, countersValidation.checkCounter(), validator, async(req, res) => {
+    await counters.insertCounters(req.body.id);
+    return res.status(201).end();
+});
 
 module.exports = router;

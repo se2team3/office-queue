@@ -19,4 +19,4 @@ const validator = (req, res, next) => {
     });
 };
 
-module.exports = { validator, countersValidation /*, others .. */};
+module.exports = { validator, countersValidation};
