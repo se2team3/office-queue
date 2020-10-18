@@ -17,7 +17,7 @@ const log = async(req, res, next) => {
  * BODY: {description}
  * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
-router.post(`/operations/insert`, log, countersValidation.checkOperation(), validator, async(req, res) => {
+router.post(`/createOperation`, log, countersValidation.checkOperation(), validator, async(req, res) => {
     await counters.insertOperations(req.body.description);
     return res.status(201).end();
 });
@@ -27,7 +27,7 @@ router.post(`/operations/insert`, log, countersValidation.checkOperation(), vali
  * BODY: {id}
  * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
-router.post(`/counters/insert`, log, countersValidation.checkCounter(), validator, async(req, res) => {
+router.post(`/createCounter`, log, countersValidation.checkCounter(), validator, async(req, res) => {
     await counters.insertCounters(req.body.id);
     return res.status(201).end();
 });

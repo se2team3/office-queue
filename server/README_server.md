@@ -1,6 +1,6 @@
 ## API to support GUI
 <!-- Endpoints are meant to be preceded by /api (/operations == /api/operations)-->
-- GET `/operations` 
+- GET `/operations`
   - Body: NONE
   - Response: List of possible operations (among all counters)
 - POST `/createRequest`
