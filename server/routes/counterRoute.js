@@ -15,7 +15,8 @@ const log = async(req, res, next) => {
 /**
  * POST
  * BODY: {description}
- * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
+ * RESPONSE BODY: <empty>
+ * RESPONSE CODE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
 router.post(`/createOperation`, log, countersValidation.checkOperation(), validator, async(req, res) => {
     await counters.insertOperations(req.body.description);
@@ -25,7 +26,8 @@ router.post(`/createOperation`, log, countersValidation.checkOperation(), valida
 /**
  * POST
  * BODY: {id}
- * RESPONSE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
+ * RESPONSE BODY: <empty>
+ * RESPONSE CODE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
  */
 router.post(`/createCounter`, log, countersValidation.checkCounter(), validator, async(req, res) => {
     await counters.insertCounters(req.body.id);
