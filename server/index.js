@@ -2,6 +2,7 @@
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const createError = require('http-errors');
 
 // import Auth
 
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // set up Routers
-app.use('/api/counters' /*only an example*/, counterRouter);
+app.use('/api', counterRouter);
 
 // Error routes: keep as last routes
 //   catch 404 and forward to error handler
@@ -36,3 +37,14 @@ app.use(function (err, req, res) {
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
+
+
+/*
+*       Creation of tables: do this only once!
+*/
+/*
+const counterModel = require('./models/counterModel');
+counterModel.createOperationsList().then();
+counterModel.createCountersList().then();
+counterModel.createCountersOperationsList().then();
+ */

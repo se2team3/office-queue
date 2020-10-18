@@ -2,9 +2,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-// TODO - change db filename
 const filename = "database.db";
-const db_name = path.join(__dirname, "data", filename);
+const db_name = path.join(__dirname, "db", filename);
 
 const db = new sqlite3.Database(db_name, (err) => {
     if (err) {

@@ -14,10 +14,10 @@ exports.createOperationsList = function() {
     })
 }
 
-exports.insertOperations = function(id, description) {
+exports.insertOperations = function(description) {
     return new Promise ((resolve,reject) =>{
-        const sql = 'INSERT INTO Operations (ID, DESCRIPTION) VALUES (?,?)'
-        db.run(sql,[id,description],(err) =>{
+        const sql = 'INSERT INTO Operations (DESCRIPTION) VALUES (?)'
+        db.run(sql,[description],(err) =>{
             if(err)
                 reject(err);
             else

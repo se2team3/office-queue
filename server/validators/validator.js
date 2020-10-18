@@ -2,7 +2,7 @@
 const { validationResult } = require('express-validator');
 
 // import validation rules
-const countersValidation = require('./countersValidators');
+const countersValidation = require('./counterValidator');
 
 // validator Middleware
 const validator = (req, res, next) => {
@@ -19,4 +19,4 @@ const validator = (req, res, next) => {
     });
 };
 
-module.exports = { validator, countersValidation /*, others .. */};
+module.exports = { validator, countersValidation};
