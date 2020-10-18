@@ -1,13 +1,12 @@
 import React from 'react';
 // import assets
 import './assets/App.css';
-import logo from './assets/logo.svg';
 // import API
 import API from "./API";
-import Board from "./components/registerForm/Board"
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
-import { render } from 'react-dom';
+import Board from "./components/Board"
+import CounterScreen from "./components/CounterScreen"
+import SettingsPage from "./components/SettingsPage"
+import {Navbar} from "react-bootstrap"
 // import React Routes
 /*
 import LoginPage from "routes/LoginPage";
@@ -22,13 +21,38 @@ import RegisterPage from "routes/RegisterPage";
 *   import userContext from "utils/userContext";
 */
 // import react-routers
-/*
-    import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-*/
+
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App"><Board></Board>
+    <div className="App">
+      <Router>
+        <Switch>
+          <Route path="/counter/:counter_id">
+          <Navbar bg="primary" variant="dark">
+              <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
+            </Navbar>
+            <CounterScreen/>
+          </Route>
+          <Route path="/board">
+            <Board></Board>
+          </Route>
+          <Route path="/settings">
+            <Navbar bg="primary" variant="dark">
+              <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
+            </Navbar>
+            <SettingsPage/>
+          </Route>
+          <Route>
+          <Navbar bg="primary" variant="dark">
+              <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
+            </Navbar>
+            <h1>Totem</h1>
+          </Route>
+        </Switch>
+      </Router>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
