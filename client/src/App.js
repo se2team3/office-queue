@@ -6,6 +6,7 @@ import API from "./API";
 import Board from "./components/Board"
 import CounterScreen from "./components/CounterScreen"
 import SettingsPage from "./components/SettingsPage"
+import TotemPage from "./components/TotemPage"
 import {Navbar} from "react-bootstrap"
 // import React Routes
 /*
@@ -45,28 +46,12 @@ function App() {
           <Navbar bg="primary" variant="dark">
               <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
             </Navbar>
-            <h1>Totem</h1>
+            <TotemPage/>
           </Route>
         </Switch>
       </Router>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
     </div>
   );
-  
-  
 }
 
 /*
