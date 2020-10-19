@@ -26,6 +26,20 @@ exports.insertOperations = function(description) {
     })
 }
 
+exports.retrieveOperations = function(description) {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'SELECT ID FROM Operations WHERE DESCRIPTION LIKE ?'
+        db.get(sql,[description],(err, row) =>{
+            if(err)
+                return reject(err);
+            if (!row)
+                resolve(null);
+            else
+                resolve(row["ID"]);
+        });
+    })
+}
+
 exports.createCountersList = function() {
     return new Promise ((resolve,reject) =>{
         const sql = 'CREATE TABLE Counters (ID INTEGER NOT NULL PRIMARY KEY)'

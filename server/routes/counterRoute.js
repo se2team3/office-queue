@@ -7,18 +7,15 @@ const counters = require('../models/counterModel');
 
 const router = express.Router();
 
-const log = async(req, res, next) => {
-    console.log(req);
-    next();
-}
-
 /**
  * POST
  * BODY: {description}
  * RESPONSE BODY: <empty>
- * RESPONSE CODE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
+ * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
-router.post(`/createOperation`, log, countersValidation.checkOperation(), validator, async(req, res) => {
+router.post(`/createOperation`, countersValidation.checkOperation(), validator, async(req, res) => {
+    if (await counters.retrieveOperations(req.body.description) !== null)
+        return res.status(303).end();
     await counters.insertOperations(req.body.description);
     return res.status(201).end();
 });
@@ -27,9 +24,9 @@ router.post(`/createOperation`, log, countersValidation.checkOperation(), valida
  * POST
  * BODY: {id}
  * RESPONSE BODY: <empty>
- * RESPONSE CODE: 201 Created    // TODO - check for duplicates (maybe 303 See Other)
+ * RESPONSE CODE: 201 Created
  */
-router.post(`/createCounter`, log, countersValidation.checkCounter(), validator, async(req, res) => {
+router.post(`/createCounter`, countersValidation.checkCounter(), validator, async(req, res) => {
     await counters.insertCounters(req.body.id);
     return res.status(201).end();
 });
