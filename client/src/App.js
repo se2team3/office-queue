@@ -37,7 +37,7 @@ function App() {
             <CounterScreen/>
           </Route>
           <Route path="/board">
-            <Board></Board>
+            <Board getBoardList={API.getBoardList}></Board>
           </Route>
           <Route path="/settings">
             <Navbar bg="primary" variant="dark">
