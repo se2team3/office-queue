@@ -28,16 +28,20 @@ function SettingsPage(props) {
             </Col>
         </Row>
         <Row>
-            
             <Col>
-                <Form.Group>
-                    <Form.Row>
-                    <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Label>How many counter are there in the office?</Form.Label>
-                        <Form.Control type="number" placeholder="Enter number of counters" value={numberOfCounters} onChange={(ev)=>setNumberOfCounters(ev.target.value)} />
+                <Form>
+                    <Form.Group as={Row}>
+                        <Col>
+                            <Form.Label>How many counter are there in the office?</Form.Label>
+                            <Form.Control type="number" placeholder="Enter number of counters" value={numberOfCounters} />
+                        </Col>
                     </Form.Group>
-                    </Form.Row>
-                </Form.Group>
+                    <Form.Group as={Row}>
+                        <Col xs="auto" >
+                            <Button variant="success">Save</Button>
+                        </Col>
+                    </Form.Group>
+                </Form>
             </Col>
         </Row>
         <Row>
