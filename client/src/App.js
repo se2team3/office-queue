@@ -30,14 +30,10 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/counter/:counter_id">
-          <Navbar bg="primary" variant="dark">
-              <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
-            </Navbar>
-            <CounterScreen/>
-          </Route>
+          <Route path="/counter/:counter_id" component={CounterScreen}/>
+          
           <Route path="/board">
-            <Board></Board>
+            <Board getBoardList={API.getBoardList}></Board>
           </Route>
           <Route path="/settings">
             <Navbar bg="primary" variant="dark">

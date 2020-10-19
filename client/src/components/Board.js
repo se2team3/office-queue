@@ -1,14 +1,20 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import {Row,Col,Container} from 'react-bootstrap';
+import moment from 'moment';
 
 class Board extends React.Component{
     constructor(props){
         super();
-        this.state={vett:[{Counter:1,Customer:'a',CallTime:1},{Counter:1,Customer:'b',CallTime:1},{Counter:1,Customer:'c',CallTime:0},{Counter:1,Customer:'d',CallTime:0},{Counter:1,Customer:'e',CallTime:0},{Counter:1,Customer:'f',CallTime:0},{Counter:1,Customer:'g',CallTime:0},{Counter:1,Customer:'h',CallTime:0},{Counter:1,Customer:'i',CallTime:0}]}
-    }
+        this.state={vett:[]}}
 
-    componentDidMount(){}
+
+    componentDidMount(){
+        setInterval(()=>{let ret=(this.props.getBoardList())
+            if(!ret.error){
+                this.setState({vett:ret});}
+            },3000)
+    }
 
   
     
@@ -26,11 +32,15 @@ class Board extends React.Component{
                      </tr>
                     </thead>
                     <tbody>{
-                        this.state.vett.slice(0,7).map((e)=>{
+                        
+                        (this.state.vett).slice(0,7).map((e)=>{
+                        let a=moment();
+                        let b=moment(e.timeServed,"hh:mm:ss");
+                        let c=a.diff(b,'seconds');
                         return (
                                 <tr key={e.Counter+e.Customer}>
-                                    {e.CallTime==1 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
-                                    {e.CallTime==1 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
                                     
                                 </tr>
                                 
@@ -41,7 +51,7 @@ class Board extends React.Component{
 
             <Col>
              <Table striped  hover  size='lg'>
-                 <thead className="tableHeader" style={{'margin-top':'0px'}}>
+                 <thead className="tableHeader" >
                      <tr>
                         <th>COUNTER</th>
                         <th>CUSTOMER</th>
@@ -49,9 +59,12 @@ class Board extends React.Component{
                     </thead>
                     <tbody>{
                         this.state.vett.slice(7,this.state.vett.end).map((e)=>{
+                        let a=moment();
+                        let b=moment(e.timeServed,"hh:mm:ss");
+                        let c=a.diff(b,'seconds');
                         return ( <tr key={e.Counter+e.Customer}>
-                                    {e.CallTime==1 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
-                                    {e.CallTime==1 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
                                 </tr>)
                          })}
                     </tbody>
