@@ -12,6 +12,17 @@ exports.createQueue = function() {
         });
     })
 }
+exports.deleteQueue = function() {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'DELETE * FROM  Queue'
+        db.run(sql,[],(err) =>{
+            if(err)
+                reject(err);
+            else
+                resolve(null);
+        });
+    })
+}
 
 exports.addCustomer = function(requestType, called = 0) {
     return new Promise (function (resolve,reject) {

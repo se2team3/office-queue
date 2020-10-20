@@ -52,4 +52,11 @@ counterModel.createCountersOperationsList().then();
 
 const queueModel = require('./models/queueModel');
 queueModel.createQueue().then();
+
  */
+const t = setInterval(function(){
+    const date = new Date();
+        if(date.getHours() === 19 && date.getMinutes() === 30) {
+            queueModel.deleteQueue().then();
+        }
+    },60000);
