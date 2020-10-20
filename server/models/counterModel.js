@@ -63,3 +63,18 @@ exports.assignOperation = function(id,counterId,operationId) {
         });
     })
 }
+
+/**
+ * Delete a counter with a given id
+ */
+exports.deleteCounter = function(id) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM Counters WHERE id = ?';
+        db.run(query, [id], (err) => {
+            if(err)
+                reject(err);
+            else
+                resolve(null);
+        })
+    });
+}

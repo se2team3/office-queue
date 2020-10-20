@@ -24,7 +24,7 @@ app.use(cookieParser());
 // set up Routers
 app.use('/api', counterRouter);
 app.use('/api', queueRouter);
-app.use('/api',boardRouter)
+app.use('/api', boardRouter)
 app.use('/api', operationRouter);
 
 // Error routes: keep as last routes

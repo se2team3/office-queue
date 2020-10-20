@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Row, Alert, Col, Container, Jumbotron, Card } from "react-bootstrap";
+import { Row, Container, Jumbotron} from "react-bootstrap";
 import TotemItem from './TotemItem';
 import TicketDialog from './TicketDialog';
 

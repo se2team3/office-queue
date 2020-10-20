@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Row, Alert, Col } from "react-bootstrap";
-import API from '../API';
+import API from '../api/API';
 
 class CounterScreen extends React.Component {
 

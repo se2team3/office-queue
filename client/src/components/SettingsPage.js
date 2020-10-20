@@ -10,8 +10,15 @@ var demoOperations = [
 ]
 
 function SettingsPage(props) {
+
+    let {getCounters, getOperations} = props;
+
+    useEffect(() => {
+        getCounters();
+        getOperations();
+    }, []);
     
-    const [numberOfCounters, setNumberOfCounters] = useState(12); //TODO get from backend
+    const [numberOfCounters, setNumberOfCounters] = useState(props.counters.length); //TODO get from backend
     const [operations, setOperations] = useState(demoOperations); //TODO get from backend
 
     return <Container style={{textAlign: "left"}}>
@@ -33,7 +40,7 @@ function SettingsPage(props) {
                     <Form.Group as={Row}>
                         <Col>
                             <Form.Label>How many counter are there in the office?</Form.Label>
-                            <Form.Control type="number" placeholder="Enter number of counters" value={numberOfCounters} />
+                            <Form.Control type="number" placeholder="Enter number of counters" value={numberOfCounters} onChange={(ev)=>{setNumberOfCounters(ev.target.value)}}/>
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row}>

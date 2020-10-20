@@ -39,3 +39,15 @@ exports.retrieveOperation = function({name}) {
         });
     })
 }
+
+exports.deleteOperationsByCounter = function (counter_id) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
+        db.run(query, [counter_id], (err) => {
+            if(err)
+                reject(err);
+            else
+                resolve(null);
+        })
+    });
+}
