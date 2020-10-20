@@ -69,8 +69,8 @@ const createOperation = function (row){
 exports.getOperations = function() {
     return new Promise((resolve, reject) => {
         let query = `SELECT o.code, o.name, o.description, c.id
-                       FROM Operations as o, Counters as c, Counters_Operations as co
-                       WHERE o.code = co.operation_code AND co.counter_id = c.id`
+                       FROM Operations as o LEFT JOIN Counters_Operations as co LEFT JOIN Counters as c ON o.code = co.operation_code AND co.counter_id = c.id
+                       `
 
         db.all(query, [], (err, rows) => {
             if (err) {
@@ -79,7 +79,7 @@ exports.getOperations = function() {
             } else {
                 // put list of counters inside counter object
                 let operations = rows.map((row) => createOperation(row)).reduce((acc, cur)=>{
-                    const counterInd = acc.findIndex(el => el.id === cur.id);
+                    const counterInd = acc.findIndex(el => el.code === cur.code);
                     if(counterInd>=0)
                         acc[counterInd].counters = acc[counterInd].counters.concat(cur.counters);
                     else
