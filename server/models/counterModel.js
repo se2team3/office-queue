@@ -4,7 +4,7 @@ const db = require('./index');
 
 exports.createOperationsList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Operations (ID INTEGER NOT NULL PRIMARY KEY, DESCRIPTION varchar(255) NOT NULL)'
+        const sql = 'CREATE TABLE Operations (CODE varchar(5) NOT NULL PRIMARY KEY, NAME varchar(255) NOT NULL, DESCRIPTION varchar(255) NOT NULL)'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -14,10 +14,10 @@ exports.createOperationsList = function() {
     })
 }
 
-exports.insertOperations = function(description) {
+exports.insertOperation = function({code, name, description = ""}) {
     return new Promise ((resolve,reject) =>{
-        const sql = 'INSERT INTO Operations (DESCRIPTION) VALUES (?)'
-        db.run(sql,[description],(err) =>{
+        const sql = 'INSERT INTO Operations (CODE, NAME, DESCRIPTION) VALUES (?, ?, ?)'
+        db.run(sql, [code, name, description], (err) => {
             if(err)
                 reject(err);
             else
@@ -26,16 +26,16 @@ exports.insertOperations = function(description) {
     })
 }
 
-exports.retrieveOperations = function(description) {
+exports.retrieveOperation = function({name}) {
     return new Promise ((resolve,reject) =>{
-        const sql = 'SELECT ID FROM Operations WHERE DESCRIPTION LIKE ?'
-        db.get(sql,[description],(err, row) =>{
+        const sql = 'SELECT CODE FROM Operations WHERE NAME LIKE ?'
+        db.get(sql, [name], (err, row) => {
             if(err)
                 return reject(err);
             if (!row)
                 resolve(null);
             else
-                resolve(row["ID"]);
+                resolve(row["CODE"]);
         });
     })
 }
@@ -52,7 +52,7 @@ exports.createCountersList = function() {
     })
 }
 
-exports.insertCounters = function(id) {
+exports.insertCounter = function({id}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'INSERT INTO Counters(ID) VALUES(?)'
         db.run(sql,[id],(err) =>{
@@ -64,9 +64,23 @@ exports.insertCounters = function(id) {
     })
 }
 
+exports.retrieveCounter = function({id}) {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'SELECT ID FROM Counters WHERE ID = ?'
+        db.get(sql, [id], (err, row) => {
+            if(err)
+                return reject(err);
+            if (!row)
+                resolve(null);
+            else
+                resolve(row["ID"]);
+        });
+    })
+}
+
 exports.createCountersOperationsList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Counters_Operations (ID INTEGER NOT NULL PRIMARY KEY, COUNTER_ID int NOT NULL, OPERATION_ID int NOT NULL, FOREIGN KEY(COUNTER_ID) REFERENCES Counters(ID),FOREIGN KEY(OPERATION_ID) REFERENCES Operations(ID))'
+        const sql = 'CREATE TABLE Counters_Operations (ID INTEGER NOT NULL PRIMARY KEY, COUNTER_ID int NOT NULL, OPERATION_CODE varchar(5) NOT NULL, FOREIGN KEY(COUNTER_ID) REFERENCES Counters(ID),FOREIGN KEY(OPERATION_CODE) REFERENCES Operations(CODE))'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);

@@ -14,9 +14,10 @@ const router = express.Router();
  * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
 router.post(`/createOperation`, countersValidation.checkOperation(), validator, async(req, res) => {
-    if (await counters.retrieveOperations(req.body.description) !== null)
+    const newOperation = {...req.body};
+    if (await counters.retrieveOperation(newOperation) !== null)
         return res.status(303).end();
-    await counters.insertOperations(req.body.description);
+    await counters.insertOperation(newOperation);
     return res.status(201).end();
 });
 
@@ -24,10 +25,13 @@ router.post(`/createOperation`, countersValidation.checkOperation(), validator, 
  * POST
  * BODY: {id}
  * RESPONSE BODY: <empty>
- * RESPONSE CODE: 201 Created
+ * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
 router.post(`/createCounter`, countersValidation.checkCounter(), validator, async(req, res) => {
-    await counters.insertCounters(req.body.id);
+    const newCounter = {...req.body};
+    if (await counters.retrieveCounter(newCounter) !== null)
+        return res.status(303).end();
+    await counters.insertCounter(newCounter);
     return res.status(201).end();
 });
 

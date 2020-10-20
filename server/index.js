@@ -50,10 +50,10 @@ counterModel.createOperationsList().then();
 counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
 
-const queueModel = require('./models/queueModel');
 queueModel.createQueue().then();
+*/
+const queueModel = require('./models/queueModel');
 
- */
 const t = setInterval(function(){
     const date = new Date();
         if(date.getHours() === 19 && date.getMinutes() === 30) {

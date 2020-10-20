@@ -3,7 +3,9 @@ const { body } = require('express-validator');
 
 const checkOperation = () => {
     return [
-        body('description').isAscii().isLength({min: 0, max: 255})
+        body('code').isAlphanumeric().isLength({min:1, max:5}),
+        body('name').isLength({min:1, max:255}),
+        body('description').optional().isLength({min: 0, max: 255})
     ];
 };
 

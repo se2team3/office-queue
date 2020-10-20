@@ -28,7 +28,7 @@
   - Body: List of possible operations, counterId
   - Response: counter object
 - POST: `/createOperation`
-  - Body: Operation object (Name - possible description)
+  - Body: Operation object (Code - Name - Possible description)
   - Response: NONE
 
 <!-- API does not include possible DELETE needed -->
