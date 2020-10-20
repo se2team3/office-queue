@@ -34,7 +34,7 @@ function App() {
           <Route path="/counter/:counter_id" component={CounterScreen}/>
           
           <Route path="/board">
-            <Board getBoardList={API.getBoardList}></Board>
+            <Board getLastCustomers={API.getLastCustomers}></Board>
           </Route>
           <Route path="/settings">
             <Navbar bg="primary" variant="dark">

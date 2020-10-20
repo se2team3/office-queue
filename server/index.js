@@ -9,6 +9,7 @@ const createError = require('http-errors');
 // import routes
 const counterRouter = require('./routes/counterRoute');
 const queueRouter = require('./routes/queueRoute');
+const boardRouter=require('./routes/boardRoute')
 
 const PORT = 3001;
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 // set up Routers
 app.use('/api', counterRouter);
 app.use('/api', queueRouter);
+app.use('/api',boardRouter)
 
 // Error routes: keep as last routes
 //   catch 404 and forward to error handler

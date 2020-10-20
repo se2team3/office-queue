@@ -49,3 +49,24 @@ exports.peopleWaiting = function(requestType) {
         });
     })
 }
+
+
+exports.getLastCustomers= function(){
+    return new Promise ((resolve,reject)=>{
+        const sql=`SELECT ID,COUNTER,TIME_SERVED
+                   FROM Queue
+                   WHERE CALLED==1
+                   ORDER BY TIME_SERVED
+                   LIMIT 14`
+        db.run(sql,(err,results)=>{
+            if(err)
+                reject(err);
+            else if(results===undefined || results.length===0){
+                resolve([{}])
+                console.log("empty array")
+            }else {
+                resolve(results);
+            }
+        })
+    })
+}

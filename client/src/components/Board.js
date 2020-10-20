@@ -6,13 +6,18 @@ import moment from 'moment';
 class Board extends React.Component{
     constructor(props){
         super();
-        this.state={vett:[]}}
+        this.state={vett:[]}
+    }
 
 
-    componentDidMount(){
-        setInterval(()=>{let ret=(this.props.getBoardList())
-            if(!ret.error){
-                this.setState({vett:ret});}
+    
+    async componentDidMount(){
+        let ret;
+        ret=await this.props.getLastCustomers()
+        this.setState({vett:ret});
+         setInterval(async ()=>{
+             ret=await this.props.getLastCustomers()
+            this.setState({vett:ret})
             },3000)
     }
 
@@ -33,7 +38,7 @@ class Board extends React.Component{
                     </thead>
                     <tbody>{
                         
-                        (this.state.vett).slice(0,7).map((e)=>{
+                        (this.state.vett).slice(0,Math.min(7,(this.state.vett.length-1))).map((e)=>{
                         let a=moment();
                         let b=moment(e.timeServed,"hh:mm:ss");
                         let c=a.diff(b,'seconds');
