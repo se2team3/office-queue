@@ -73,6 +73,7 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Switch>
+            {/* TODO missing navbar in counter screen -->*/}
             <Route path="/counter/:counter_id" component={CounterScreen}/>
             
             <Route path="/board">

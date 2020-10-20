@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const createError = require('http-errors');
 const queueModel = require('./models/queueModel');
-const CronJob = require('../lib/cron.js').CronJob;
+const CronJob = require('cron').CronJob;
 
 // import Auth
 
@@ -68,6 +68,7 @@ const t = setInterval(function(){
         }
     },60000);*/
 
-const job = new CronJob('00 30 19 * * 1-7',queueModel.deleteQueue());
+//TODO warning unhandled rejection from deleteQueue probably
+const job = new CronJob('00 00 * * 0-6', queueModel.deleteQueue());
 
 job.start();

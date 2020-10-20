@@ -28,7 +28,7 @@ class CounterScreen extends React.Component {
 
     render() {
         return (
-            <Col className="justify-content-md-center">
+            <Col className="justify-content-md-center" style={{textAlign: "center"}}>
                 <h1>{`Counter ${this.state.counterId}`}</h1>
                 <p>
                     This counter is currently serving the following operations: Payments, Accounts, Banking
