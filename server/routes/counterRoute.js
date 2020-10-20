@@ -9,20 +9,6 @@ const router = express.Router();
 
 /**
  * POST
- * BODY: {description}
- * RESPONSE BODY: <empty>
- * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
- */
-router.post(`/createOperation`, countersValidation.checkOperation(), validator, async(req, res) => {
-    const newOperation = {...req.body};
-    if (await counters.retrieveOperation(newOperation) !== null)
-        return res.status(303).end();
-    await counters.insertOperation(newOperation);
-    return res.status(201).end();
-});
-
-/**
- * POST
  * BODY: {id}
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 201 Created or 303 See Other if resource already exists

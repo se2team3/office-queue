@@ -4,7 +4,7 @@ const express = require('express');
 const {validator, queueValidation} = require('../validators/validator');
 // import models
 const queue = require('../models/queueModel');
-const counter = require('../models/counterModel');
+const operations = require('../models/operationModel');
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ const router = express.Router();
  */
 router.post(`/createRequest`, queueValidation.checkRequest(), validator, async(req, res) => {
     const newRequest = {...req.body};
-    const operationID = await counter.retrieveOperation(newRequest);
+    const operationID = await operations.retrieveOperation(newRequest);
     if (operationID === null)
         return res.status(404).end();
 

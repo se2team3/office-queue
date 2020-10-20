@@ -9,6 +9,7 @@ const createError = require('http-errors');
 // import routes
 const counterRouter = require('./routes/counterRoute');
 const queueRouter = require('./routes/queueRoute');
+const operationRouter = require('./routes/operationRoute');
 
 const PORT = 3001;
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 // set up Routers
 app.use('/api', counterRouter);
 app.use('/api', queueRouter);
+app.use('/api', operationRouter);
 
 // Error routes: keep as last routes
 //   catch 404 and forward to error handler
@@ -46,7 +48,8 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 */
 /*
 const counterModel = require('./models/counterModel');
-counterModel.createOperationsList().then();
+const operationModel = require('./models/operationModel');
+operationModel.createOperationsList().then();
 counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
 
