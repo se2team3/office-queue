@@ -3,6 +3,8 @@ const { validationResult } = require('express-validator');
 
 // import validation rules
 const countersValidation = require('./counterValidator');
+const queueValidation = require('./queueValidator');
+const operationsValidation = require('./operationValidator');
 
 // validator Middleware
 const validator = (req, res, next) => {
@@ -19,4 +21,4 @@ const validator = (req, res, next) => {
     });
 };
 
-module.exports = { validator, countersValidation};
+module.exports = { validator, countersValidation, queueValidation, operationsValidation };

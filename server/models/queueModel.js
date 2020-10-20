@@ -14,7 +14,7 @@ exports.createQueue = function() {
 }
 exports.deleteQueue = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'DELETE * FROM  Queue'
+        const sql = 'DELETE * FROM Queue'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -24,10 +24,10 @@ exports.deleteQueue = function() {
     })
 }
 
-exports.addCustomer = function(requestType, called = 0) {
+exports.addCustomer = function(requestType, numberInQueue, called = 0) {
     return new Promise (function (resolve,reject) {
-        const sql = 'INSERT INTO Queue (REQUEST_TYPE, CALLED) VALUES(?,?)'
-        db.run(sql, [requestType, called], function(err) {
+        const sql = 'INSERT INTO Queue (REQUEST_TYPE, COUNTER, CALLED) VALUES(?,?,?)'
+        db.run(sql, [requestType, numberInQueue, called], function(err) {
             if(err)
                 reject(err);
             else
@@ -36,16 +36,16 @@ exports.addCustomer = function(requestType, called = 0) {
     })
 }
 
-exports.peopleWaiting = function(requestType) {
+exports.getTicketNumber = function(requestType) {
     return new Promise (function (resolve,reject) {
-        const sql = 'SELECT COUNT (*) AS TOT FROM Queue WHERE REQUEST_TYPE = ? AND CALLED = 0'
+        const sql = 'SELECT MAX(COUNTER) AS N FROM Queue WHERE REQUEST_TYPE = ?'
         db.get(sql, [requestType], function(err, row) {
             if(err)
                 reject(err);
             if (!row)
-                resolve(null);
+                resolve(1);
             else
-                resolve(row["TOT"]);
+                resolve(row["N"]);
         });
     })
 }
