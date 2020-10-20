@@ -32,12 +32,55 @@ router.get('/operations', (req, res) => {
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
-router.post(`/createOperation`, operationsValidation.checkOperation(), validator, async(req, res) => {
+router.post(`/operation`, operationsValidation.checkOperation(), validator, async(req, res) => {
     const newOperation = {...req.body};
     if (await operations.retrieveOperation(newOperation) !== null)
         return res.status(303).end();
     await operations.insertOperation(newOperation);
     return res.status(201).end();
+});
+
+/**
+ * PUT
+ * BODY: {code, name, description}
+ * RESPONSE BODY: <empty>
+ * RESPONSE CODE: 200 Updated, 400 no id in request, 500 internal server error
+ */
+router.put('/operation/:operation_id', async (req,res) => {
+    if(!req.body.id){
+        res.status(400).end();
+    } else {
+        const operation = req.body;
+        try{
+            await operatons.updateOperation(req.params.operation_id, operation)
+            res.status(200).end()
+        }
+        catch(err){
+            res.status(500).json({
+                errors: [{'param': 'Server', 'msg': err}],
+            })
+        }
+    }
+});
+
+/**
+ * DELETE
+ * BODY: <empty>
+ * RESPONSE BODY: <empty>
+ * RESPONSE CODE: 204 Deleted or 500 internal server error
+ */
+router.delete('/operation/:operation_id', async (req,res) => {
+    try{
+        //await operations.deleteOperationsByCounter(req.params.counter_id); 
+        //TODO delete the many-to-many relationships related to this operation
+        await operation.deleteOperation(req.params.counter_id);
+        res.status(204).end();
+    }
+    catch(err){
+        res.status(500).json({
+            errors: [{'param': 'Server', 'msg': err}],
+        })
+    }
 });
 
 module.exports = router;

@@ -8,7 +8,7 @@ function ModalOperation(props){
     const [name,setName] = useState(props.operation?props.operation.name:"");
     const [code,setCode] = useState(props.operation?props.operation.code:"");
     const [description,setDescription] = useState(props.operation?props.operation.description:"");
-    const [multiSelections, setMultiSelections] = useState(props.operation?props.operation.counters.map((n)=>{return {label: n.toString(), id: n}}):[]);
+    const [multiSelections, setMultiSelections] = useState(props.operation?props.operation.counters.map((n)=>{return {label: n.id.toString(), id: n.id}}):[]);
 
     return (
         <Modal

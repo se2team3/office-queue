@@ -91,3 +91,21 @@ exports.getOperations = function() {
         });
     });
 }
+
+/**
+ * Update existing operation
+ */
+exports.updateOperation = function(id, operation) {
+    return new Promise((resolve, reject) => {
+        const sql = 'UPDATE Operations SET NAME = ?, DESCRIPTION = ? WHERE CODE = ?';
+
+        db.run(sql, [operation.name, operation.description, id], (err) => {
+            if(err){
+                console.log(err);
+                reject(err);
+            }
+            else
+                resolve(null);
+        })
+    });
+}
