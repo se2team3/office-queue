@@ -7,6 +7,25 @@ const operations = require('../models/operationModel');
 
 const router = express.Router();
 
+
+/**
+ * GET
+ * BODY: <empty>
+ * RESPONSE BODY: operations list in json
+ * RESPONSE CODE: 200 all ok or 500 server
+ */
+router.get('/operations', (req, res) => {
+    operations.getOperations()
+        .then((operations) => {
+            res.json(operations);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                errors: [{'msg': err}],
+            });
+        });
+});
+
 /**
  * POST
  * BODY: {code, name, description}

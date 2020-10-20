@@ -11,16 +11,25 @@ var demoOperations = [
 
 function SettingsPage(props) {
 
+    const [numberOfCounters, setNumberOfCounters] = useState(props.counters.length); //TODO get from backend
+    const [operations, setOperations] = useState(props.operations); //TODO get from backend
+
     let {getCounters, getOperations} = props;
 
     useEffect(() => {
         getCounters();
         getOperations();
     }, []);
-    
-    const [numberOfCounters, setNumberOfCounters] = useState(props.counters.length); //TODO get from backend
-    const [operations, setOperations] = useState(demoOperations); //TODO get from backend
 
+    useEffect(() => {
+        setNumberOfCounters(props.counters.length)
+    }, [props.counters.length]);
+
+    useEffect(() => {
+        setOperations(props.operations)
+    }, [props.operations]);
+    
+    
     return <Container style={{textAlign: "left"}}>
         <Row>
             <Col>

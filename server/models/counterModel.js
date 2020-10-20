@@ -1,6 +1,15 @@
 // import modules
 // import database
 const db = require('./index');
+const Counter = require('./Counter');
+
+const createCounter = function (row){
+    operations = []
+    if(row.operations){
+        operations = row.operations
+    }
+    return new Counter(row.ID, operations);
+}
 
 exports.createCountersList = function() {
     return new Promise ((resolve,reject) =>{
@@ -76,5 +85,55 @@ exports.deleteCounter = function(id) {
             else
                 resolve(null);
         })
+    });
+}
+
+/**
+ * Get counters list
+ */
+exports.getCounters = function() {
+    return new Promise((resolve, reject) => {
+        let query = `SELECT id
+                       FROM Counters`
+
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                let boards = rows.map((row) => createCounter(row));
+                console.log(boards);
+                resolve(boards);
+            }
+        });
+    });
+}
+
+
+/**
+ * Get a counter with a given id WIP
+ */
+exports.getCounter = function(counter_id){
+    return new Promise((resolve, reject) => {
+        let query = `SELECT id, .................................
+                       FROM Counters as c, Counters_Operations as co, Operations as o
+                       WHERE c.id = co.counter_id AND co.operation_code = o.code`
+
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                // put list of operations inside counter object
+                let cards = rows.map((row) => createCardOptionalLink(row)).reduce((acc, cur)=>{
+                    const cardInd = acc.findIndex(el => el.id === cur.id);
+                    if(cardInd>=0)
+                        acc[cardInd].interestingLinks = acc[cardInd].interestingLinks.concat(cur.interestingLinks);
+                    else
+                        acc.push(cur);
+                    return acc;
+                }, []);
+                resolve(cards);
+            }
+        });
     });
 }
