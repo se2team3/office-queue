@@ -5,7 +5,7 @@ const Operation = require('./Operation');
 
 exports.createOperationsList = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Operations (CODE varchar(5) NOT NULL PRIMARY KEY, NAME varchar(255) NOT NULL, DESCRIPTION varchar(255) NOT NULL)'
+        const sql = 'CREATE TABLE Operations (code varchar(5) NOT NULL PRIMARY KEY, name varchar(255) NOT NULL, description varchar(255) NOT NULL)'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -17,7 +17,7 @@ exports.createOperationsList = function() {
 
 exports.insertOperation = function({code, name, description = ""}) {
     return new Promise ((resolve,reject) =>{
-        const sql = 'INSERT INTO Operations (CODE, NAME, DESCRIPTION) VALUES (?, ?, ?)'
+        const sql = 'INSERT INTO Operations (code, name, description) VALUES (?, ?, ?)'
         db.run(sql, [code, name, description], (err) => {
             if(err)
                 reject(err);
@@ -29,7 +29,7 @@ exports.insertOperation = function({code, name, description = ""}) {
 
 exports.retrieveOperation = function({name}) {
     return new Promise ((resolve,reject) =>{
-        const sql = 'SELECT CODE FROM Operations WHERE NAME LIKE ?'
+        const sql = 'SELECT code FROM Operations WHERE name LIKE ?'
         db.get(sql, [name], (err, row) => {
             if(err)
                 return reject(err);
@@ -58,9 +58,9 @@ const createOperation = function (row){
     console.log(row)
     counters = []
     if(row.ID){
-        counters = [ row.ID ]
+        counters = [ row.id ]
     }
-    return new Operation(row.CODE, row.NAME, row.DESCRIPTION, counters);
+    return new Operation(row.code, row.name, row.description, counters);
 }
 
 /**

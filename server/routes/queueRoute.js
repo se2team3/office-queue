@@ -14,9 +14,10 @@ const router = express.Router();
  * RESPONSE BODY: {type, numberInQueue}
  * RESPONSE CODE: 201 Created on success, 404 Not Found if operationType not present, 500 Internal Server Error on db error
  */
-router.post(`/createRequest`, queueValidation.checkRequest(), validator, async(req, res) => {
-    const newRequest = {...req.body};
-    const operationID = await operations.retrieveOperation(newRequest);
+router.post(`/createRequest`, async(req, res) => {
+    /* const newRequest = {...req.body};
+    const operationID = await operations.retrieveOperation(newRequest); */
+    const operationID = req.body.code;
     if (operationID === null)
         return res.status(404).end();
 
@@ -27,9 +28,10 @@ router.post(`/createRequest`, queueValidation.checkRequest(), validator, async(r
         return res.status(500).end();
 
     return res.status(201).json({
-        "type": operationID,
-        "numberInQueue": numberInQueue
+        "code": operationID,
+        "number": numberInQueue
     });
+    return {code: 'A', number: 43};
 });
 
 
