@@ -13,6 +13,8 @@ const baseURL = "/api";
     } 
  }
 
+ 
+
 
 async function callNextCustomer(counterId) {
     const response = fetch(baseURL + "/callNextCustomer", {

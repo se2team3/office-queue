@@ -38,9 +38,9 @@ class Board extends React.Component{
                     </thead>
                     <tbody>{
                         
-                        (this.state.vett).slice(0,Math.min(7,(this.state.vett.length-1))).map((e)=>{
+                        (this.state.vett).slice(0,Math.min(7,(this.state.vett.length))).map((e)=>{
                         let a=moment();
-                        let b=moment(e.timeServed,"hh:mm:ss");
+                        let b=moment(e.timeServed,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
                         return (
                                 <tr key={e.Counter+e.Customer}>
@@ -65,7 +65,7 @@ class Board extends React.Component{
                     <tbody>{
                         this.state.vett.slice(7,this.state.vett.end).map((e)=>{
                         let a=moment();
-                        let b=moment(e.timeServed,"hh:mm:ss");
+                        let b=moment(e.timeServed,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
                         return ( <tr key={e.Counter+e.Customer}>
                                     {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
