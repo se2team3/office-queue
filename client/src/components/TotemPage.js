@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Container, Jumbotron} from "react-bootstrap";
 import TotemItem from './TotemItem';
 import TicketDialog from './TicketDialog';
+import API from '../api/API';
 
 const testTicket = {code: 'A', number: 42};
 
@@ -22,12 +23,18 @@ class TotemPage extends React.Component {
         }
     }
 
+    componentDidMount(){
+        API.getOperations()
+        .then((ops) => this.setState({operations: ops}))
+        .catch((err) => console.log(err));
+    }
     onGetNumberPressed= (code)=>{
         console.log("Selected code: "+ code);
         // TODO call API
-        /* API.getTicket(code)
-        .then((newTicket) => this.setState({ticket: newTicket}))
-        .catch((err) => handleError); */
+        API.getTicket(code)
+        .then((newTicket) => {
+            this.setState((state) => ({ticket: newTicket}))})
+        .catch((err) => console.log(err));
         this.setState({showTicketDialog:true});
     }
 
@@ -45,10 +52,10 @@ class TotemPage extends React.Component {
             </Jumbotron>
             <Container fluid>
                 <Row>
-                    {demoOperations.map((op) => <TotemItem op={op} key={op.code} onGetNumberPressed={this.onGetNumberPressed}></TotemItem>)}
+                    {this.state.operations.map((op) => <TotemItem op={op} key={op.code} onGetNumberPressed={()=>this.onGetNumberPressed(op.code)}></TotemItem>)}
                 </Row>
             </Container>
-            <TicketDialog ticket={testTicket} show={this.state.showTicketDialog} handleHide={this.hideTicketDialog}/>
+            <TicketDialog ticket={this.state.ticket} show={this.state.showTicketDialog} handleHide={this.hideTicketDialog}/>
         </>
     }
 }

@@ -106,5 +106,22 @@ async function getOperations() {
     }
 }
 
-const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations}
+async function getTicket(opId) {
+    const response = await fetch(baseURL + "/createRequest", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({code: opId}),
+    });
+    const ticketJson = await response.json();
+    if(response.ok){
+        return ticketJson;
+    } else {
+        let err = {status: response.status, errObj:ticketJson};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations, getTicket}
 export default API
