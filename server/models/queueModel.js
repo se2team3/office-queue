@@ -3,7 +3,7 @@ const db = require('./index');
 // TODO - times are not localtime
 exports.createQueue = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'CREATE TABLE Queue (ID INTEGER NOT NULL PRIMARY KEY, REQUEST_TYPE varchar(5) NOT NULL, COUNTER int, INITIAL_TIME TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, CALLED BOOLEAN NOT NULL CHECK (CALLED IN (0,1)),TIME_SERVED TIMESTAMP, FOREIGN KEY(REQUEST_TYPE) REFERENCES Operations(CODE), FOREIGN KEY(COUNTER) REFERENCES Counters(ID))'
+        const sql = `CREATE TABLE Queue (ID INTEGER NOT NULL PRIMARY KEY, REQUEST_TYPE varchar(5) NOT NULL, COUNTER int, INITIAL_TIME TIMESTAMP NOT NULL DEFAULT (datetime('now','localtime')) , CALLED BOOLEAN NOT NULL CHECK (CALLED IN (0,1)),TIME_SERVED TIMESTAMP, FOREIGN KEY(REQUEST_TYPE) REFERENCES Operations(CODE), FOREIGN KEY(COUNTER) REFERENCES Counters(ID))`;
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);

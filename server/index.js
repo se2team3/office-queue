@@ -3,6 +3,8 @@ const express = require('express');
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const createError = require('http-errors');
+const queueModel = require('./models/queueModel');
+const CronJob = require('../lib/cron.js').CronJob;
 
 // import Auth
 
@@ -56,12 +58,16 @@ counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
 
 queueModel.createQueue().then();
-*/
-const queueModel = require('./models/queueModel');
+
+
 
 const t = setInterval(function(){
     const date = new Date();
         if(date.getHours() === 19 && date.getMinutes() === 30) {
             queueModel.deleteQueue().then();
         }
-    },60000);
+    },60000);*/
+
+const job = new CronJob('00 30 19 * * 1-7',queueModel.deleteQueue());
+
+job.start();
