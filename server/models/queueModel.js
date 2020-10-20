@@ -14,7 +14,7 @@ exports.createQueue = function() {
 }
 exports.deleteQueue = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = 'DELETE * FROM Queue'
+        const sql = 'DELETE FROM Queue'
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
