@@ -39,6 +39,7 @@ router.post(`/operations`, operationsValidation.checkOperation(), validator, asy
     return res.status(201).end();
 });
 
+// TODO - missing validation (both on parameter and body)
 /**
  * PUT
  * BODY: {code, name, description}
@@ -50,7 +51,6 @@ router.put('/operations/:operation_code', async (req,res) => {
         res.status(400).end();
     }   else {
         const operation = req.body;
-        console.log(operation);
         const code = req.params.operation_code;
         try{
             if (!await operations.hasOperation(code))
@@ -66,6 +66,7 @@ router.put('/operations/:operation_code', async (req,res) => {
     }
 });
 
+// TODO - missing validation on parameter
 /**
  * DELETE
  * BODY: <empty>

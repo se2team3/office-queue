@@ -8,6 +8,7 @@ const operations = require('../models/operationModel');
 
 const router = express.Router();
 
+// TODO - missing validation
 /**
  * POST
  * BODY: {code (of the requested operation)}
@@ -29,18 +30,16 @@ router.post(`/createRequest`, async(req, res) => {
     });
 });
 
-
-
+// TODO - missing validation
 /**
  * PUT
  * BODY: <counterId>
  * RESPONSE BODY: 
  * RESPONSE CODE: 200 all ok or 500 server
  */
-
 router.put(`/callNextCustomer`,(req,res)=>{
     queue.callNextCustomer(req.body.counterId)
-    
+    .then(_ => res.status(200).end())
     .catch((err)=>{
         res.status(400).json({
             errors:[{'msg':err}]
