@@ -16,7 +16,7 @@ class Board extends React.Component{
         ret=await this.props.getLastCustomers()
         this.setState({vett:ret});
          setInterval(async ()=>{
-             ret=await this.props.getLastCustomers()
+             ret=await this.props.getLastCustomers();
             this.setState({vett:ret})
             },3000)
     }

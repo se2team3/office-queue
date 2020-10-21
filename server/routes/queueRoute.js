@@ -49,7 +49,11 @@ router.put(`/callNextCustomer`,(req,res)=>{
 
  router.get('/lastCustomers',async (req,res)=>{
     const list = await queue.getLastCustomers();
-    res.json(list);
+    res.json(list.map(l => ({
+        timeServed: l["time_served"],
+        Counter: l["counter"],
+        Customer: l["request_type"] + l["ticket_number"],
+    })));
     return res.status(200).end();
 })
 
