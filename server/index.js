@@ -54,13 +54,13 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 /*
 const counterModel = require('./models/counterModel');
 const operationModel = require('./models/operationModel');
-const queueModel = require('./models/queueModel');
 
 operationModel.createOperationsList().then();
 counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
 queueModel.createQueue().then();
 */
+const queueModel = require('./models/queueModel');
 /*
 
 const t = setInterval(function(){
