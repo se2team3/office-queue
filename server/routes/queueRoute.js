@@ -20,13 +20,13 @@ router.post(`/createRequest`, async(req, res) => {
     if (operationID === null || !await operations.hasOperation(operationID))
         return res.status(404).end();
 
-    const ticketID = await queue.addCustomer(operationID);
-    if (!ticketID)
-        return res.status(500).end();
+    const ticketNumber = await queue.getNextTicket(operationID);
+    console.log(`ticketNumber = ${ticketNumber}`);
+    await queue.addCustomer(operationID, ticketNumber);
 
     return res.status(201).json({
         "code": operationID,
-        "number": ticketID
+        "number": ticketNumber
     });
 });
 
