@@ -72,11 +72,13 @@ router.put('/operation/:operation_code', operationsValidation.checkOperation(), 
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 204 Deleted or 500 internal server error
  */
-router.delete('/operation/:operation_id', async (req,res) => {
+router.delete('/operation/:operation_code', async (req,res) => {
     try{
-        //await operations.deleteOperationsByCounter(req.params.counter_id); 
-        //TODO delete the many-to-many relationships related to this operation
-        await operation.deleteOperation(req.params.counter_id);
+        //TODO [THIS has been done on client side, should it be done on server?] delete the many-to-many relationships related to this operation
+        //await operations.deleteOperationsByCounter(req.params.counter_id);
+        console.log(1);
+        await operations.deleteOperation(req.params.operation_code);
+        console.log(2)
         res.status(204).end();
     }
     catch(err){

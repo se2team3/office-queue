@@ -69,12 +69,11 @@ class App extends React.Component {
   }
 
   updateCounters = (numberOfCounters) => {    //updates the counters list
-    
     for(let i=0; i < Math.abs(this.state.counters.length-numberOfCounters); i++){
       if(this.state.counters.length<numberOfCounters){
         API.addCounter({id: this.state.counters.length + 1 + i})
           .then(()=>{this.getOperations()
-            this.getCounters()})
+            this.getCounters()})// TODO [MINOR!] call these gets only for the last insertion
           .catch((errorObj) => {
             this.handleErrors(errorObj);
         });
@@ -82,13 +81,12 @@ class App extends React.Component {
       else if(this.state.counters.length>numberOfCounters){
         API.deleteCounter(this.state.counters.length-i)
           .then(()=>{this.getOperations()
-            this.getCounters()})
+            this.getCounters()})// TODO [MINOR!] call these gets only for the last deletion
           .catch((errorObj) => {
             this.handleErrors(errorObj);
-        });
+          });
       }
     }
-    
   }
 
   addOperation = (operation) => {
@@ -97,8 +95,12 @@ class App extends React.Component {
         this.getOperations()
         this.getCounters()
       }
-      ).catch(()=>console.log("ADD OP COUNTER ERR"))
-    ).catch(()=>console.log("ADD OP ERR"))
+      ).catch((errorObj) => {
+        this.handleErrors(errorObj);
+      })
+    ).catch((errorObj) => {
+      this.handleErrors(errorObj);
+    });
   }
 
   editOperation = (operation) => {
@@ -107,8 +109,24 @@ class App extends React.Component {
         this.getOperations()
         this.getCounters()
       }
-      ).catch(()=>console.log("EDIT OP COUNTER ERR"))
-    ).catch(()=>console.log("EDIT OP ERR"))
+      ).catch((errorObj) => {
+        this.handleErrors(errorObj);
+      })
+    ).catch((errorObj) => {
+      this.handleErrors(errorObj);
+    });
+  }
+
+  deleteOperation = (operation) => {
+    API.updateCounterOperation(operation.code, []).then(()=>{
+      API.deleteOperation(operation.code).then(()=>this.getOperations())
+      .catch((errorObj) => {
+        this.handleErrors(errorObj);
+      });
+    }
+    ).catch((errorObj) => {
+      this.handleErrors(errorObj);
+    })
   }
 
   render(){
@@ -134,6 +152,7 @@ class App extends React.Component {
                 updateCounters={this.updateCounters}
                 addOperation={this.addOperation}
                 editOperation={this.editOperation}
+                deleteOperation={this.deleteOperation}
               />
             </Route>
             <Route>
