@@ -75,7 +75,7 @@ exports.callNextCustomer= function(counterId){
     return new Promise( (resolve,reject)=>{
         const sql=
        `UPDATE Queue
-        SET CALLED=1, COUNTER=1, TIME_SERVED= CURRENT_TIMESTAMP
+        SET CALLED=1, COUNTER=?, TIME_SERVED= CURRENT_TIMESTAMP
         WHERE ID IN
            (SELECT ID 
            FROM (SELECT ID, INITIAL_TIME
@@ -87,7 +87,7 @@ exports.callNextCustomer= function(counterId){
                              WHERE CALLED=0 AND REQUEST_TYPE IN
                                    (SELECT DISTINCT OPERATION_CODE
                                     FROM Counters_Operations
-                                    WHERE COUNTER_ID=1)
+                                    WHERE COUNTER_ID=?)
                              GROUP BY REQUEST_TYPE
                              ORDER BY c DESC
                              LIMIT 1
