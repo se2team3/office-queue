@@ -35,4 +35,24 @@ router.post(`/createRequest`, async(req, res) => {
 });
 
 
+
+/**
+ * PUT
+ * BODY: <counterId>
+ * RESPONSE BODY: 
+ * RESPONSE CODE: 200 all ok or 500 server
+ */
+
+router.put(`/callNextCustomer`,(req,res)=>{
+    queue.callNextCustomer(req.body.counterId)
+    
+    .catch((err)=>{
+        res.status(400).json({
+            errors:[{'msg':err}]
+        });
+    });
+ })
+
+
+
 module.exports = router;

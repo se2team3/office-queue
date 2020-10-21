@@ -23,7 +23,7 @@
   - Response: NONE
 - POST `/callNextCustomer`
   - Body: counterId
-  - Response: ticketId <!-- Of called customer -->
+  - Response: NONE
 - POST `/createCounter`
   - Body: List of possible operations (counterId may be obtained by auto-increment of id in DB)
   - Response: Counter object

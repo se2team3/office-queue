@@ -57,17 +57,55 @@ exports.getLastCustomers= function(){
         const sql=`SELECT ID,counter,time_served
                    FROM Queue
                    WHERE called==1
-                   ORDER BY time_served
+                   ORDER BY time_served DESC
                    LIMIT 14`
         db.run(sql,(err,results)=>{
             if(err)
                 reject(err);
             else if(results===undefined || results.length===0){
                 resolve([{}])
-                console.log("empty array")
             }else {
                 resolve(results);
             }
         })
     })
 }
+
+exports.callNextCustomer= function(counterId){
+    return new Promise( (resolve,reject)=>{
+        const sql=
+       `UPDATE Queue
+        SET CALLED=1, COUNTER=1
+        WHERE ID IN
+           (SELECT ID 
+           FROM (SELECT ID, INITIAL_TIME
+                 FROM Queue
+                 WHERE CALLED=0 AND REQUEST_TYPE IN
+                      (SELECT REQUEST_TYPE
+                       FROM (SELECT REQUEST_TYPE, COUNT(*) AS c
+                             FROM Queue
+                             WHERE CALLED=0 AND REQUEST_TYPE IN
+                                   (SELECT DISTINCT OPERATION_CODE
+                                    FROM Counters_Operations
+                                    WHERE COUNTER_ID=1)
+                             GROUP BY REQUEST_TYPE
+                             ORDER BY c DESC
+                             LIMIT 1
+                            )
+                       )
+                 ORDER BY INITIAL_TIME 
+                 LIMIT 1
+                 )
+           )`
+        
+            db.run(sql,[counterId,counterId],
+            function(err){
+                if(err){
+                    reject(err);
+                }
+                else
+                    resolve("OK");
+         });
+     
+    });
+ }
