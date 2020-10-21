@@ -100,6 +100,7 @@ exports.getOperations = function() {
                         acc.push(cur);
                     return acc;
                 }, []);
+                console.log(operations);
                 resolve(operations);
             }
         });
