@@ -15,7 +15,7 @@
 - GET `/counters/:counterId`
   - Param: counterId
   - Response: Counter object (Id, Operations, Customers in line)
-- GET `/LastCustomers`
+- GET `/lastCustomers`
   - Param: NONE
   - Response: List of the 14 most recent called customers
 - POST `/terminateRequest`

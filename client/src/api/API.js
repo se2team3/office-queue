@@ -5,7 +5,7 @@ const baseURL = "/api";
 
 //get the list to be shown on the board
  async function getLastCustomers(){
-     const response=await fetch("/api/LastCustomers")
+     const response=await fetch("/api/lastCustomers")
     const object=response.json();
     if(response.ok){
         return object;
