@@ -41,6 +41,20 @@ exports.retrieveOperation = function({name}) {
     })
 }
 
+exports.hasOperation = function(code) {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'SELECT code FROM Operations WHERE code LIKE ?'
+        db.get(sql, [code], (err, row) => {
+            if(err)
+                return reject(err);
+            if (!row)
+                resolve(false);
+            else
+                resolve(true);
+        });
+    })
+}
+
 exports.deleteOperationsByCounter = function (counter_id) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
@@ -95,11 +109,11 @@ exports.getOperations = function() {
 /**
  * Update existing operation
  */
-exports.updateOperation = function(id, operation) {
+exports.updateOperation = function(code, operation) {
     return new Promise((resolve, reject) => {
-        const sql = 'UPDATE Operations SET NAME = ?, DESCRIPTION = ? WHERE CODE = ?';
+        const sql = 'UPDATE Operations SET code = ?, name = ?, description = ? WHERE code = ?';
 
-        db.run(sql, [operation.name, operation.description, id], (err) => {
+        db.run(sql, [operation.code, operation.name, operation.description, code], (err) => {
             if(err){
                 console.log(err);
                 reject(err);

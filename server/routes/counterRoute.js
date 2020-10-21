@@ -27,6 +27,8 @@ router.get('/counters', (req, res) => {
         });
 });
 
+
+
 /**
  * POST
  * BODY: {id}

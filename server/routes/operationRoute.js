@@ -7,7 +7,6 @@ const operations = require('../models/operationModel');
 
 const router = express.Router();
 
-
 /**
  * GET
  * BODY: <empty>
@@ -32,7 +31,7 @@ router.get('/operations', (req, res) => {
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
-router.post(`/operation`, operationsValidation.checkOperation(), validator, async(req, res) => {
+router.post(`/operations`, operationsValidation.checkOperation(), validator, async(req, res) => {
     const newOperation = {...req.body};
     if (await operations.retrieveOperation(newOperation) !== null)
         return res.status(303).end();
@@ -44,16 +43,20 @@ router.post(`/operation`, operationsValidation.checkOperation(), validator, asyn
  * PUT
  * BODY: {code, name, description}
  * RESPONSE BODY: <empty>
- * RESPONSE CODE: 200 Updated, 400 no id in request, 500 internal server error
+ * RESPONSE CODE: 200 Updated, 400 no id in request, 404 Not Found if operation code doesn't exist, 500 internal server error
  */
-router.put('/operation/:operation_id', async (req,res) => {
-    if(!req.body.id){
+router.put('/operations/:operation_code', async (req,res) => {
+    if (!req.body.code) {
         res.status(400).end();
-    } else {
+    }   else {
         const operation = req.body;
+        console.log(operation);
+        const code = req.params.operation_code;
         try{
-            await operatons.updateOperation(req.params.operation_id, operation)
-            res.status(200).end()
+            if (!await operations.hasOperation(code))
+                return res.status(404).end();
+            await operations.updateOperation(code, operation);
+            res.status(200).end();
         }
         catch(err){
             res.status(500).json({
