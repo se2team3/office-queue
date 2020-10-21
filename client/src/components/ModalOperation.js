@@ -13,13 +13,6 @@ function ModalOperation(props){
         return {label: n.toString(), id: n}
     }):[]);
 
-    function updateCounterOperations(){
-        let countersId = multiSelections.map((s)=> s.id);
-        console.log(countersId);
-        API.updateCounterOperation(code, countersId)
-        .then((res) => console.log('ok'))
-        .catch((err)=> console.log(err));
-    }
     return (
         <Modal
             show={props.show}
@@ -36,8 +29,11 @@ function ModalOperation(props){
             </Modal.Header>
             <Form onSubmit={(event) => {
                 event.preventDefault()
+                if(props.operation)
+                    props.editOperation({name: name, description: description, code: code, counters: multiSelections.map((mi)=>mi.id)})
+                else
+                    props.addOperation({name: name, description: description, code: code, counters: multiSelections.map((mi)=>mi.id)})
                 props.onHide()
-                updateCounterOperations()
             }}>
                 <Modal.Body>
                     <Form.Group>
@@ -52,7 +48,7 @@ function ModalOperation(props){
                         <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Operation code (keep it short, one or two letters)</Form.Label>
-                            <Form.Control type="text" placeholder="Enter the operation code" value={code} onChange={(ev)=>setCode(ev.target.value)} />
+                            <Form.Control readOnly={props.operation} type="text" placeholder="Enter the operation code" value={code} onChange={(ev)=>setCode(ev.target.value)} />
                         </Form.Group>
                         </Form.Row>
                     </Form.Group>

@@ -70,7 +70,12 @@ function SettingsPage(props) {
         </Row>
         <Row>
             <Col>
-                <OperationsSettings operations={operations} availableCounters={props.counters.map((n)=>{return {label: n.id.toString(), id: n.id}})} />
+                <OperationsSettings
+                    operations={operations}
+                    availableCounters={props.counters.map((n)=>{return {label: n.id.toString(), id: n.id}})}
+                    addOperation={props.addOperation}
+                    editOperation={props.editOperation}
+                />
             </Col>
         </Row>
     </Container>

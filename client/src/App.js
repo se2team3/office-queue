@@ -83,6 +83,16 @@ class App extends React.Component {
     
   }
 
+  addOperation = (operation) => {
+    API.addOperation(operation);
+    API.updateCounterOperation(operation.code, operation.counters);
+  }
+
+  editOperation = (operation) => {
+    API.editOperation(operation);
+    API.updateCounterOperation(operation.code, operation.counters)
+  }
+
   render(){
     return (
       <div className="App">
@@ -104,6 +114,8 @@ class App extends React.Component {
                 getCounters={this.getCounters}
                 getOperations={this.getOperations}
                 updateCounters={this.updateCounters}
+                addOperation={this.addOperation}
+                editOperation={this.editOperation}
               />
             </Route>
             <Route>
