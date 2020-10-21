@@ -29,13 +29,17 @@ class Board extends React.Component{
         },3000)
 }
 
-  
-    
-
-
-    render(){
-        return(  <Container  >
-        <Row>
+    renderHalfBoard= (postion)=>{
+        let startIndex, endIndex;
+        if(postion==0){
+            // first half
+            startIndex = 0;
+            endIndex = Math.min(7,(this.state.vett.length));
+        }else{
+            startIndex = 7;
+            endIndex = Math.min(14,(this.state.vett.length));
+        }
+        return (
             <Col>
                 <Table striped hover size='lg' >
                  <thead className="tableHeader">
@@ -46,14 +50,14 @@ class Board extends React.Component{
                     </thead>
                     <tbody>{
                         
-                        (this.state.vett).slice(0,Math.min(7,(this.state.vett.length))).map((e)=>{
+                        (this.state.vett).slice(startIndex,endIndex).map((e)=>{
                         let a=moment();
                         let b=moment(e.time_served,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
                         return (
                                 <tr key={e.counter+e.id}>
                                     {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type}${e.id}`}</td> :<td>{`${e.request_type}${e.id}`}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type} ${e.id}`}</td> :<td>{`${e.request_type} ${e.id}`}</td> }
                                     
                                 </tr>
                                 
@@ -62,27 +66,17 @@ class Board extends React.Component{
                 </Table>
             </Col>
 
-            <Col>
-             <Table striped  hover  size='lg'>
-                 <thead className="tableHeader" >
-                     <tr>
-                        <th>COUNTER</th>
-                        <th>CUSTOMER</th>
-                     </tr>
-                    </thead>
-                    <tbody>{
-                        this.state.vett.slice(7,this.state.vett.end).map((e)=>{
-                        let a=moment();
-                        let b=moment(e.time_served,"YYYY-MM-DD hh:mm:ss");
-                        let c=a.diff(b,'seconds');
-                        return ( <tr key={e.counter+e.id}>
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type}${e.id}`}</td> :<td>{`${e.request_type}${e.id}`}</td> }
-                                </tr>)
-                         })}
-                    </tbody>
-             </Table>
-            </Col> 
+        );
+    }
+  
+    
+
+
+    render(){
+        return(  <Container  >
+        <Row>
+            {this.renderHalfBoard(0)}
+            {this.renderHalfBoard(1)}
         </Row>
 
     </Container>);
