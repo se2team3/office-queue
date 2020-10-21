@@ -17,8 +17,9 @@ const router = express.Router();
 router.post(`/counterOperations`, async(req, res) => {
     const {counter_id, operation_code} = {...req.body};
 
-/*     console.log(req.body);
-    console.log(req.params); */
+/*    console.log(req.body);
+    console.log(req.params);
+ */
     counter_operations.insertCounterOperation(counter_id,operation_code)
     .then((newOp)=> res.status(200).json({id: newOp}))
     .catch((err)=> res.status(500).json({ errors: [{ 'param': 'Server', 'msg': err }], }));
@@ -32,7 +33,6 @@ router.post(`/counterOperations`, async(req, res) => {
  */
 router.delete('/counterOperations/:operation_code', async (req,res) => {
     //const {counter_id, operation_code} = {...req.body};
-
 
     counter_operations.deleteCounterOperation(req.params.operation_code)
     .then((deleted)=> res.status(200).json())

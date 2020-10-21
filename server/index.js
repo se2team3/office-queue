@@ -3,7 +3,6 @@ const express = require('express');
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const createError = require('http-errors');
-const queueModel = require('./models/queueModel');
 const CronJob = require('cron').CronJob;
 
 // import Auth
@@ -55,20 +54,22 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 /*
 const counterModel = require('./models/counterModel');
 const operationModel = require('./models/operationModel');
+
 operationModel.createOperationsList().then();
 counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
-
 queueModel.createQueue().then();
-
-
+*/
+const queueModel = require('./models/queueModel');
+/*
 
 const t = setInterval(function(){
     const date = new Date();
         if(date.getHours() === 19 && date.getMinutes() === 30) {
             queueModel.deleteQueue().then();
         }
-    },60000);*/
+    },60000);
+*/
 
 //TODO warning unhandled rejection from deleteQueue probably
 //cron library is used to schedule the queue reset
