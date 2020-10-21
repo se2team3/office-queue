@@ -124,7 +124,7 @@ function OperationSettingsRow(props){
     return <tr>
         <td>{props.operation.code}</td>
         <td>{props.operation.name}</td>
-        <td>{props.operation.counters.join(" ")}</td>
+        <td>{props.operation.counters.sort().join(" ")}</td>
         <td><Button size="sm" variant="primary" onClick={()=>props.editOperation()} style={{marginLeft: "1px", marginRight: "1px"}}>
                 <Icon.Pencil/>
             </Button>
