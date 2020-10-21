@@ -75,6 +75,7 @@ function SettingsPage(props) {
                     availableCounters={props.counters.map((n)=>{return {label: n.id.toString(), id: n.id}})}
                     addOperation={props.addOperation}
                     editOperation={props.editOperation}
+                    deleteOperation={props.deleteOperation}
                 />
             </Col>
         </Row>
@@ -98,7 +99,7 @@ function OperationsSettings(props){
             </thead>
             <tbody>
                 {props.operations.map((operation)=>{
-                    return <OperationSettingsRow operation={operation} editOperation={()=>{setModalOperation(operation); setModalOperationShow(true)}}/>
+                    return <OperationSettingsRow operation={operation} editOperation={()=>{setModalOperation(operation); setModalOperationShow(true)}} deleteOperation={props.deleteOperation}/>
                 })}
             </tbody>
         </Table>}
@@ -127,7 +128,7 @@ function OperationSettingsRow(props){
         <td><Button size="sm" variant="primary" onClick={()=>props.editOperation()} style={{marginLeft: "1px", marginRight: "1px"}}>
                 <Icon.Pencil/>
             </Button>
-            <Button size="sm" variant="danger" onClick={()=>props.deleteCard()} style={{marginLeft: "1px", marginRight: "1px"}}>
+            <Button size="sm" variant="danger" onClick={()=>props.deleteOperation(props.operation)} style={{marginLeft: "1px", marginRight: "1px"}}>
                 <Icon.Trash/>
             </Button>
         </td>
