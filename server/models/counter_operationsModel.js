@@ -32,10 +32,10 @@ exports.insertCounterOperation = function (counter_id, operation_code) {
 }
 
 
-exports.deleteCounterOperation = function (counter_id, operation_code) {
+exports.deleteCounterOperation = function (operation_code) {
     return new Promise((resolve, reject) => {
-        const query = 'DELETE FROM Counters_Operations WHERE counter_id = ? AND operation_code = ?';
-        db.run(query, [counter_id,operation_code], (err) => {
+        const query = 'DELETE FROM Counters_Operations WHERE operation_code = ?';
+        db.run(query, [operation_code], (err) => {
             if(err)
                 reject(err);
             else

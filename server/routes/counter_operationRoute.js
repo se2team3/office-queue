@@ -34,7 +34,6 @@ router.post(`/counterOperations`, async(req, res) => {
 router.delete('/counterOperations/:operation_code', async (req,res) => {
     //const {counter_id, operation_code} = {...req.body};
 
-
     counter_operations.deleteCounterOperation(req.params.operation_code)
     .then((deleted)=> res.status(200).json())
     .catch((err)=> res.status(500).json({ errors: [{ 'param': 'Server', 'msg': err }], }));
