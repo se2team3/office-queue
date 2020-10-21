@@ -21,7 +21,7 @@ const baseURL = "/api";
 
 async function callNextCustomer(counterId) {
     const response = fetch(baseURL + "/callNextCustomer", {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
