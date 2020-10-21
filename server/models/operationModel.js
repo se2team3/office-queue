@@ -129,3 +129,18 @@ exports.updateOperation = function(code, operation) {
         })
     });
 }
+
+//delete an operation given the counter_id
+exports.deleteOperation = function (operation_code) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM Operations WHERE code = ?';
+        db.run(query, [operation_code], (err) => {
+            if(err){
+                console.log(err);
+                reject(err);
+            }
+            else
+                resolve(null);
+        })
+    });
+}

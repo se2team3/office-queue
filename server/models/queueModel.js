@@ -57,7 +57,7 @@ exports.getNextTicket = function(requestType) {
 
 exports.getLastCustomers = function(){
     return new Promise (function (resolve,reject) {
-        const sql=`SELECT id, counter, time_served, request_type
+        const sql=`SELECT id, counter, time_served, request_type, ticket_number
                    FROM Queue
                    WHERE called = 1
                    ORDER BY time_served DESC
