@@ -14,6 +14,7 @@ class Board extends React.Component{
     async componentDidMount(){
         let ret;
         ret=await this.props.getLastCustomers()
+        console.log(ret)
         this.setState({vett:ret});
          setInterval(async ()=>{
              ret=await this.props.getLastCustomers()
@@ -40,12 +41,12 @@ class Board extends React.Component{
                         
                         (this.state.vett).slice(0,Math.min(7,(this.state.vett.length))).map((e)=>{
                         let a=moment();
-                        let b=moment(e.timeServed,"YYYY-MM-DD hh:mm:ss");
+                        let b=moment(e.time_served,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
                         return (
-                                <tr key={e.Counter+e.Customer}>
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
+                                <tr key={e.counter+e.id}>
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.id}</td> :<td>{e.id}</td> }
                                     
                                 </tr>
                                 
@@ -65,11 +66,11 @@ class Board extends React.Component{
                     <tbody>{
                         this.state.vett.slice(7,this.state.vett.end).map((e)=>{
                         let a=moment();
-                        let b=moment(e.timeServed,"YYYY-MM-DD hh:mm:ss");
+                        let b=moment(e.time_served,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
-                        return ( <tr key={e.Counter+e.Customer}>
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Counter}</td> :<td>{e.Counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.Customer}</td> :<td>{e.Customer}</td> }
+                        return ( <tr key={e.counter+e.id}>
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.id}</td> :<td>{e.id}</td> }
                                 </tr>)
                          })}
                     </tbody>

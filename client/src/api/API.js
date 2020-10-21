@@ -7,6 +7,7 @@ const baseURL = "/api";
  async function getLastCustomers(){
      const response=await fetch("/api/lastCustomers")
     const object=response.json();
+    console.log(object)
     if(response.ok){
         return object;
     }else{
@@ -21,7 +22,6 @@ const baseURL = "/api";
 //it asks to the server who is the next customer and it updates the "called" and timeServed fields, 
 //it also inserts the number of the counter that will serve the customer
 async function callNextCustomer(counterId) {
-    console.log(counterId)
     const response = fetch(baseURL + "/callNextCustomer", {
             method: 'PUT',
             headers: {

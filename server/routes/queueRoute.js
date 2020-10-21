@@ -38,7 +38,6 @@ router.post(`/createRequest`, async(req, res) => {
  * RESPONSE CODE: 200 all ok or 500 server
  */
 router.put(`/callNextCustomer`,(req,res)=>{
-    console.log(req.body.counterId)
     const param={counterId:req.body.counterId}
     queue.callNextCustomer(param)
     .then(_ => res.status(200).end())
@@ -51,6 +50,7 @@ router.put(`/callNextCustomer`,(req,res)=>{
 
  router.get('/lastCustomers',async (req,res)=>{
     const list = await queue.getLastCustomers();
+    console.log(list)
     res.json(list);
     return res.status(200).end();
 })
