@@ -51,7 +51,7 @@ app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`
 /*
 *       Creation of tables: do this only once!
 */
-
+/*
 const counterModel = require('./models/counterModel');
 const operationModel = require('./models/operationModel');
 const queueModel = require('./models/queueModel');
@@ -60,7 +60,7 @@ operationModel.createOperationsList().then();
 counterModel.createCountersList().then();
 counterModel.createCountersOperationsList().then();
 queueModel.createQueue().then();
-
+*/
 /*
 
 const t = setInterval(function(){
