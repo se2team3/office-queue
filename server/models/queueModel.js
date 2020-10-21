@@ -1,9 +1,10 @@
 const db = require('./index');
 
-// TODO - times are not localtime
+//it creates a table in the database used to manage customers, it contains the operation that the customer wants to perform, the counter that will serve him
+//two timestamps used to calculate the priority request and a boolean field if the customer is served or not
 exports.createQueue = function() {
     return new Promise ((resolve,reject) =>{
-        const sql = `CREATE TABLE Queue (id INTEGER NOT NULL PRIMARY KEY, request_type varchar(5) NOT NULL, counter INTEGER, initial_time TIMESTAMP NOT NULL DEFAULT (datetime('now','localtime')) , called BOOLEAN NOT NULL CHECK (called IN (0,1)),time_served TIMESTAMP, FOREIGN KEY(request_type) REFERENCES Operations(CODE), FOREIGN KEY(counter) REFERENCES Counters(id))`;
+        const sql = `CREATE TABLE Queue (id INTEGER NOT NULL PRIMARY KEY, request_type varchar(5) NOT NULL, ticket_number INTEGER NOT NULL, counter INTEGER, initial_time TIMESTAMP NOT NULL DEFAULT (datetime('now','localtime')) , called BOOLEAN NOT NULL CHECK (called IN (0,1)),time_served TIMESTAMP, FOREIGN KEY(request_type) REFERENCES Operations(CODE), FOREIGN KEY(counter) REFERENCES Counters(id))`;
         db.run(sql,[],(err) =>{
             if(err)
                 reject(err);
@@ -12,6 +13,7 @@ exports.createQueue = function() {
         });
     })
 }
+//query that deletes all queue data at a certain time of the day, it is necessary to do not allocate many data on database
 exports.deleteQueue = function() {
     return new Promise ((resolve,reject) =>{
         const sql = 'DELETE FROM Queue'
@@ -24,53 +26,56 @@ exports.deleteQueue = function() {
     })
 }
 
-exports.addCustomer = function(requestType, called = 0) {
+//when a new customer arrives this function will fill the db 
+exports.addCustomer = function(requestType, ticket_number, called = 0) {
     return new Promise (function (resolve,reject) {
-        const sql = 'INSERT INTO Queue (request_type, called) VALUES(?,?)'
-        db.run(sql, [requestType, called], function(err) {
+        const sql = 'INSERT INTO Queue (request_type, ticket_number, called) VALUES(?,?,?)'
+        db.run(sql, [requestType, ticket_number, called], function(err) {
             if(err)
                 reject(err);
             else
-                resolve(this.lastID);
+                resolve();
         });
     })
 }
 
-exports.getTicketNumber = function(requestType) {
+exports.getNextTicket = function(requestType) {
     return new Promise (function (resolve,reject) {
-        const sql = 'SELECT MAX(counter) AS N FROM Queue WHERE request_type = ?'
-        db.get(sql, [requestType], function(err, row) {
+        const sql = 'SELECT MAX(ticket_number) + 1 AS N FROM Queue WHERE request_type LIKE ?';
+        db.get(sql, [requestType], function(err, res) {
+            console.log(res);
+            console.log(requestType);
             if(err)
                 reject(err);
-            if (!row['N'])
+            else if (!res["N"])
                 resolve(1);
-            else{
-                resolve(row["N"]);
-            }
+            else
+                resolve(res["N"]);
         });
     })
 }
 
-
-exports.getLastCustomers= function(){
-    return new Promise ((resolve,reject)=>{
-        const sql=`SELECT ID,counter,time_served
+exports.getLastCustomers = function(){
+    return new Promise (function (resolve,reject) {
+        const sql=`SELECT id, counter, time_served, request_type
                    FROM Queue
-                   WHERE called==1
+                   WHERE called = 1
                    ORDER BY time_served DESC
-                   LIMIT 14`
-        db.run(sql,(err,results)=>{
+                   LIMIT 14`;
+        db.all(sql, [], (err, results) => {
+            console.log(results);
             if(err)
                 reject(err);
             else if(results===undefined || results.length===0){
                 resolve([{}])
-            }else {
+            } else {
                 resolve(results);
             }
         })
     })
 }
 
+//this function will call the next customer in order of priority
 exports.callNextCustomer= function(counterId){
     return new Promise( (resolve,reject)=>{
         const sql=
@@ -109,3 +114,4 @@ exports.callNextCustomer= function(counterId){
      
     });
  }
+

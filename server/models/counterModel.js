@@ -11,6 +11,7 @@ const createCounter = function (row){
     return new Counter(row.ID, operations);
 }
 
+//it creates the counter table in the database
 exports.createCountersList = function() {
     return new Promise ((resolve,reject) =>{
         const sql = 'CREATE TABLE Counters (id INTEGER NOT NULL PRIMARY KEY)'
@@ -22,7 +23,7 @@ exports.createCountersList = function() {
         });
     })
 }
-
+//function that inserts new counters to the list
 exports.insertCounter = function({id}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'INSERT INTO Counters(id) VALUES(?)'
@@ -34,7 +35,7 @@ exports.insertCounter = function({id}) {
         });
     })
 }
-
+//gets the counter with the selected is
 exports.retrieveCounter = function({id}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'SELECT id FROM Counters WHERE id = ?'
@@ -48,7 +49,7 @@ exports.retrieveCounter = function({id}) {
         });
     })
 }
-
+//creates a table that manages the operations for a specific counters
 exports.createCountersOperationsList = function() {
     return new Promise ((resolve,reject) =>{
         const sql = 'CREATE TABLE Counters_Operations (id INTEGER NOT NULL PRIMARY KEY, counter_id int NOT NULL, operation_code varchar(5) NOT NULL, FOREIGN KEY(counter_id) REFERENCES Counters(id),FOREIGN KEY(operation_code) REFERENCES Operations(code))'
@@ -61,6 +62,7 @@ exports.createCountersOperationsList = function() {
     })
 }
 
+//it assigns to a counter an operation
 exports.assignOperation = function(id,counterId,operationId) {
     return new Promise ((resolve,reject) =>{
         const sql = 'INSERT INTO Counters_Operations (id,counter_id,operation_id) values(?,?,?)'

@@ -3,9 +3,8 @@ const queue = require('../models/queueModel');
 const router = express.Router();
 
 router.get('/lastCustomers',async (req,res)=>{
-    await queue.getLastCustomers().then((list)=>{
-        res.json(list);
-    });
+    const list = await queue.getLastCustomers();
+    res.json(list);
     return res.status(200).end();
 })
 
