@@ -114,4 +114,3 @@ exports.callNextCustomer= function(counterId){
      
     });
  }
-
