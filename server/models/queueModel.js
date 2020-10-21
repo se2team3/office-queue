@@ -76,14 +76,30 @@ exports.getLastCustomers = function(){
 }
 
 //this function will call the next customer in order of priority
-exports.callNextCustomer= function(param){
+exports.callNextCustomer= function(counter, id){
+    console.log(`id is `, id);
+    console.log(`counter is `, counter);
     return new Promise( (resolve,reject)=>{
         const sql=
        `UPDATE Queue
-        SET CALLED=1, COUNTER=?, TIME_SERVED= datetime('now','localtime')
-        WHERE ID IN
-           (SELECT ID 
-           FROM (SELECT ID, INITIAL_TIME
+        SET CALLED=1, COUNTER=?, TIME_SERVED=datetime('now','localtime')
+        WHERE ID = ?`;
+        
+        db.run(sql, [counter, id], function(err) {
+            if(err){
+                reject(err);
+            }
+            else
+                resolve();
+        });
+    });
+ }
+
+ exports.whoIsNextCustomer = function(counter) {
+    return new Promise( (resolve,reject)=>{
+        const sql=
+            `SELECT ID, request_type, ticket_number
+             FROM (SELECT ID, INITIAL_TIME, request_type, ticket_number
                  FROM Queue
                  WHERE CALLED=0 AND REQUEST_TYPE IN
                       (SELECT REQUEST_TYPE
@@ -100,17 +116,31 @@ exports.callNextCustomer= function(param){
                        )
                  ORDER BY INITIAL_TIME 
                  LIMIT 1
-                 )
-           )`
-        
-            db.run(sql,[param.counterId,param.counterId],
-            function(err){
+                 )`;
+        db.get(sql,[counter],
+            function(err, row){
                 if(err){
                     reject(err);
                 }
+                if (!row)
+                    resolve(null);
                 else
-                    resolve("OK");
-         });
-     
+                    resolve(row);
+            });
+
     });
- }
+}
+
+exports.getTicketByRowID = function(rowID) {
+    return new Promise (function (resolve,reject) {
+        const sql=` SELECT request_type as code, ticket_number as number
+                    FROM Queue
+                    WHERE id = ?`;
+        db.get(sql, [rowID], (err, row) => {
+            if(err)
+                reject(err);
+            else
+                resolve(row);
+        })
+    })
+}
