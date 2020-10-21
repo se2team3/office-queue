@@ -68,6 +68,21 @@ class App extends React.Component {
         });
   }
 
+  updateCounters = (numberOfCounters) => {
+    
+    for(let i=0; i < Math.abs(this.state.counters.length-numberOfCounters); i++){
+      if(this.state.counters.length<numberOfCounters){
+        API.addCounter({id: this.state.counters.length + 1 + i})
+          .then(()=>{this.getCounters()})//TODO not very good probably, no catch, many calls to api
+      }
+      else if(this.state.counters.length>numberOfCounters){
+        API.deleteCounter(this.state.counters.length-i)
+        .then(()=>{this.getCounters()})//TODO not very good probably, no catch, many calls to api
+      }
+    }
+    
+  }
+
   render(){
     return (
       <div className="App">
@@ -83,7 +98,13 @@ class App extends React.Component {
               <Navbar bg="primary" variant="dark">
                 <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
               </Navbar>
-              <SettingsPage counters={this.state.counters} operations={this.state.operations} getCounters={this.getCounters} getOperations={this.getOperations} />
+              <SettingsPage
+                counters={this.state.counters}
+                operations={this.state.operations}
+                getCounters={this.getCounters}
+                getOperations={this.getOperations}
+                updateCounters={this.updateCounters}
+              />
             </Route>
             <Route>
             <Navbar bg="primary" variant="dark">

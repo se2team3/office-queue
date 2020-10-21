@@ -41,6 +41,20 @@ exports.retrieveOperation = function({name}) {
     })
 }
 
+exports.hasOperation = function(id) {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'SELECT code FROM Operations WHERE code LIKE ?'
+        db.get(sql, [id], (err, row) => {
+            if(err)
+                return reject(err);
+            if (!row)
+                resolve(false);
+            else
+                resolve(true);
+        });
+    })
+}
+
 exports.deleteOperationsByCounter = function (counter_id) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
@@ -89,5 +103,23 @@ exports.getOperations = function() {
                 resolve(operations);
             }
         });
+    });
+}
+
+/**
+ * Update existing operation
+ */
+exports.updateOperation = function(id, operation) {
+    return new Promise((resolve, reject) => {
+        const sql = 'UPDATE Operations SET NAME = ?, DESCRIPTION = ? WHERE CODE = ?';
+
+        db.run(sql, [operation.name, operation.description, id], (err) => {
+            if(err){
+                console.log(err);
+                reject(err);
+            }
+            else
+                resolve(null);
+        })
     });
 }

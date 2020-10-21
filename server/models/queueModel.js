@@ -24,10 +24,10 @@ exports.deleteQueue = function() {
     })
 }
 
-exports.addCustomer = function(requestType, numberInQueue, called = 0) {
+exports.addCustomer = function(requestType, called = 0) {
     return new Promise (function (resolve,reject) {
-        const sql = 'INSERT INTO Queue (request_type, counter, called) VALUES(?,?,?)'
-        db.run(sql, [requestType, numberInQueue, called], function(err) {
+        const sql = 'INSERT INTO Queue (request_type, called) VALUES(?,?)'
+        db.run(sql, [requestType, called], function(err) {
             if(err)
                 reject(err);
             else

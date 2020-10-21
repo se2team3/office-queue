@@ -106,6 +106,50 @@ async function getOperations() {
     }
 }
 
+async function addOperation(operation) {
+    let response;
+    try {
+        response = await fetch(baseURL + "/operation", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(operation),
+        });
+    }
+    catch(err){
+        throw({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+    }
+
+    if(response.ok){
+        try{
+            let responseJson = await response.json();
+            return responseJson.id;
+        }
+        catch(err){
+            throw({ errors: [{ param: "Application", msg: "Cannot parse response" }] });
+        }
+    }
+    else throw {status: response.status};
+}
+
+async function deleteOperation(operationId) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + "/operation/" + operationId, {
+            method: 'DELETE'
+        }).then( (response) => {
+            if(response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then( (obj) => {reject(obj);} ) // error msg in the response body
+                    .catch( (err) => {reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
 async function getTicket(opId) {
     const response = await fetch(baseURL + "/createRequest", {
         method: 'POST',
@@ -123,5 +167,6 @@ async function getTicket(opId) {
     }
 }
 
-const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations, getTicket}
+const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations, addOperation, deleteOperation, getTicket}
+
 export default API

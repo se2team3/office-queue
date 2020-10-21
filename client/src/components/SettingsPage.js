@@ -45,7 +45,10 @@ function SettingsPage(props) {
         </Row>
         <Row>
             <Col>
-                <Form>
+                <Form onSubmit={(event) => {
+                    event.preventDefault()
+                    props.updateCounters(numberOfCounters)
+                }}>
                     <Form.Group as={Row}>
                         <Col>
                             <Form.Label>How many counter are there in the office?</Form.Label>
@@ -54,7 +57,7 @@ function SettingsPage(props) {
                     </Form.Group>
                     <Form.Group as={Row}>
                         <Col xs="auto" >
-                            <Button variant="success">Save</Button>
+                            <Button type="submit" variant="success">Save</Button>
                         </Col>
                     </Form.Group>
                 </Form>
@@ -67,7 +70,7 @@ function SettingsPage(props) {
         </Row>
         <Row>
             <Col>
-                <OperationsSettings operations={operations} availableCounters={Array.from(Array(numberOfCounters).keys()).map((n)=>{return {label: n.toString(), id: n}})} />
+                <OperationsSettings operations={operations} availableCounters={props.counters.map((n)=>{return {label: n.id.toString(), id: n.id}})} />
             </Col>
         </Row>
     </Container>

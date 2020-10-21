@@ -43,8 +43,6 @@ router.post(`/counter`, countersValidation.checkCounter(), validator, async(req,
     return res.status(201).end();
 });
 
-module.exports = router;
-
 /**
  * DELETE
  * BODY: <empty>
@@ -63,3 +61,7 @@ router.delete('/counter/:counter_id', async (req,res) => {
         })
     }
 });
+
+module.exports = router;
+
+module.exports = router;
