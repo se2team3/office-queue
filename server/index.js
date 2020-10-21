@@ -69,6 +69,8 @@ const t = setInterval(function(){
     },60000);*/
 
 //TODO warning unhandled rejection from deleteQueue probably
-const job = new CronJob('00 00 * * 0-6', queueModel.deleteQueue());
+const job = new CronJob('00 00 * * 0-6', queueModel.deleteQueue()
+                        .then(() =>{console.log("Deleted successfully")})
+                        .catch((err) =>{console.log("Error" + err)}));
 
 job.start();
