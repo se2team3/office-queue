@@ -27,7 +27,24 @@ router.get('/counters', (req, res) => {
         });
 });
 
-
+/**
+ * GET
+ * BODY: <empty>
+ * PARAM: counter_id
+ * RESPONSE BODY: counters list in json
+ * RESPONSE CODE: 200 all ok, 404 not found or 500 server
+ */
+router.get('/counters/:counter_id', async (req, res) => {
+    const counterId = req.params.counter_id;
+    console.log(counterId);
+    if (!await counters.hasCounter(counterId))
+        return res.status(404).end();
+    const operations = await counters.getCounter(counterId);
+    return res.status(200).json({
+        id: counterId,
+        operations: [...operations],
+    });
+});
 
 /**
  * POST

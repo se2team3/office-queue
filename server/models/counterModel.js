@@ -111,11 +111,49 @@ exports.getCounters = function() {
     });
 }
 
+exports.hasCounter = function(counter_id) {
+    return new Promise((resolve, reject) => {
+        let query = `SELECT id
+                     FROM Counters
+                     WHERE id = ?`;
+        db.get(query, [counter_id], (err, row) => {
+            if (err) {
+                console.log(err);
+                return reject(err);
+            }
+            if (!row)
+                resolve(false);
+            else
+                resolve(true);
+        });
+    });
+}
+
+/**
+ * Get counter by id
+ */
+exports.getCounter = function(counter_id) {
+    console.log(counter_id);
+    return new Promise((resolve, reject) => {
+        const query = ` SELECT operation_code
+                        FROM Counters_Operations
+                        WHERE counter_id = ?`;
+        db.all(query, [counter_id], (err, rows) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(rows.map(r => r["operation_code"]));
+            }
+        });
+    });
+}
+
 
 /**
  * Get a counter with a given id WIP
  */
-exports.getCounter = function(counter_id){
+exports.getCounter_ = function(counter_id){
     return new Promise((resolve, reject) => {
         let query = `SELECT id, .................................
                        FROM Counters as c, Counters_Operations as co, Operations as o
