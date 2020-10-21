@@ -54,7 +54,7 @@ async function getCounters() {
 async function addCounter(counter) {
     let response;
     try {
-        response = await fetch(baseURL + "/counter", {
+        response = await fetch(baseURL + "/counters", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -66,17 +66,9 @@ async function addCounter(counter) {
         throw({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
     }
 
-    if(response.ok){
-        try{
-            let responseJson = await response.json();
-            return responseJson.id;
-        }
-        catch(err){
-            throw({ errors: [{ param: "Application", msg: "Cannot parse response" }] });
-        }
-    }
-    else throw {status: response.status};
+    if(!response.ok)throw {status: response.status};
 }
+
 //deletes the counter given its id
 async function deleteCounter(counterId) {
     return new Promise((resolve, reject) => {
@@ -110,7 +102,7 @@ async function getOperations() {
 async function addOperation(operation) {
     let response;
     try {
-        response = await fetch(baseURL + "/operation", {
+        response = await fetch(baseURL + "/operations", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -214,6 +206,7 @@ async function updateCounterOperation(operation,countersList) {
 
 
 const API={getLastCustomers, callNextCustomer, getCounters, addCounter,
-     deleteCounter, getOperations, addOperation, deleteOperation, getTicket, updateCounterOperation}
+     deleteCounter, getOperations, addOperation, updateOperation, deleteOperation, getTicket,
+     updateCounterOperation}
 
 export default API

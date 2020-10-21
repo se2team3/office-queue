@@ -39,14 +39,13 @@ router.post(`/operations`, operationsValidation.checkOperation(), validator, asy
     return res.status(201).end();
 });
 
-// TODO - missing validation (both on parameter and body)
 /**
  * PUT
  * BODY: {code, name, description}
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 200 Updated, 400 no id in request, 404 Not Found if operation code doesn't exist, 500 internal server error
  */
-router.put('/operations/:operation_code', async (req,res) => {
+router.put('/operation/:operation_code', operationsValidation.checkOperation(), validator, async (req,res) => {
     if (!req.body.code) {
         res.status(400).end();
     }   else {
