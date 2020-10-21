@@ -8,7 +8,7 @@
   - Response: ticket object (Type - Number in queue)
 - GET `/requests`
   - Param: NONE (TBD if completed is a req. param. or is implemented client side )
-  - Rsponse: List of requests (served)
+  - Response: List of requests (served)
 - GET `/counters`
   - Param: NONE
   - Response: List of all counters
@@ -30,7 +30,10 @@
 - POST `/editCounter`
   - Body: List of possible operations, counterId
   - Response: counter object
-- POST: `/createOperation`
+- POST: `/operation`
+  - Body: Operation object (Code - Name - Possible description)
+  - Response: NONE
+- PUT: `/operation/:operationID`
   - Body: Operation object (Code - Name - Possible description)
   - Response: NONE
 
