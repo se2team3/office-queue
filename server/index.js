@@ -43,7 +43,7 @@ app.use(function (err, req, res) {
     res.status(err.status || 500);
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
+app.listen(PORT, () => console.log(`[!] Server running on http://localhost:${PORT}/`));
 
 
 /*
