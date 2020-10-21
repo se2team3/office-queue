@@ -70,8 +70,8 @@ exports.deleteOperationsByCounter = function (counter_id) {
 
 const createOperation = function (row){
     console.log(row)
-    counters = []
-    if(row.ID){
+    let counters = []
+    if(row.id){
         counters = [ row.id ]
     }
     return new Operation(row.code, row.name, row.description, counters);
