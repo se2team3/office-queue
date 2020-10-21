@@ -75,7 +75,7 @@ exports.callNextCustomer= function(counterId){
     return new Promise( (resolve,reject)=>{
         const sql=
        `UPDATE Queue
-        SET CALLED=1, COUNTER=1
+        SET CALLED=1, COUNTER=1, TIME_SERVED= CURRENT_TIMESTAMP
         WHERE ID IN
            (SELECT ID 
            FROM (SELECT ID, INITIAL_TIME
