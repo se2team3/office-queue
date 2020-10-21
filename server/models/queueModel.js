@@ -36,35 +36,20 @@ exports.addCustomer = function(requestType, called = 0) {
     })
 }
 
-exports.getTicketNumber = function(requestType) {
+exports.getLastCustomers = function(){
     return new Promise (function (resolve,reject) {
-        const sql = 'SELECT MAX(counter) AS N FROM Queue WHERE request_type = ?'
-        db.get(sql, [requestType], function(err, row) {
-            if(err)
-                reject(err);
-            if (!row['N'])
-                resolve(1);
-            else{
-                resolve(row["N"]);
-            }
-        });
-    })
-}
-
-
-exports.getLastCustomers= function(){
-    return new Promise ((resolve,reject)=>{
-        const sql=`SELECT ID,counter,time_served
+        const sql=`SELECT id, counter, time_served, request_type
                    FROM Queue
-                   WHERE called==1
+                   WHERE called = 1
                    ORDER BY time_served DESC
-                   LIMIT 14`
-        db.run(sql,(err,results)=>{
+                   LIMIT 14`;
+        db.all(sql, [], (err, results) => {
+            console.log(results);
             if(err)
                 reject(err);
             else if(results===undefined || results.length===0){
                 resolve([{}])
-            }else {
+            } else {
                 resolve(results);
             }
         })
