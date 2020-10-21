@@ -2,6 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table';
 import {Row,Col,Container} from 'react-bootstrap';
 import moment from 'moment';
+import API from '../api/API';
 
 class Board extends React.Component{
     constructor(props){
@@ -13,14 +14,20 @@ class Board extends React.Component{
     
     async componentDidMount(){
         let ret;
-        ret=await this.props.getLastCustomers()
-        console.log(ret)
-        this.setState({vett:ret});
-         setInterval(async ()=>{
-             ret=await this.props.getLastCustomers();
-            this.setState({vett:ret})
-            },3000)
-    }
+        API.getLastCustomers()
+        .then((res) => {
+            console.log(res);
+            this.setState({vett: res});
+        })
+        .catch((err)=> console.log(err));
+        setInterval(async ()=>{
+            API.getLastCustomers()
+        .then((res) => {
+            console.log(res);
+            this.setState({vett: res});
+        })
+        },3000)
+}
 
   
     
@@ -46,7 +53,7 @@ class Board extends React.Component{
                         return (
                                 <tr key={e.counter+e.id}>
                                     {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.id}</td> :<td>{e.id}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type}${e.id}`}</td> :<td>{`${e.request_type}${e.id}`}</td> }
                                     
                                 </tr>
                                 
@@ -70,7 +77,7 @@ class Board extends React.Component{
                         let c=a.diff(b,'seconds');
                         return ( <tr key={e.counter+e.id}>
                                     {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.id}</td> :<td>{e.id}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type}${e.id}`}</td> :<td>{`${e.request_type}${e.id}`}</td> }
                                 </tr>)
                          })}
                     </tbody>

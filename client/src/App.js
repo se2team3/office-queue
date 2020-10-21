@@ -138,7 +138,7 @@ class App extends React.Component {
             <Route path="/counter/:counter_id" component={CounterScreen}/>
             
             <Route path="/board">
-              <Board getLastCustomers={API.getLastCustomers}></Board>
+              <Board></Board>
             </Route>
             <Route path="/settings">
               <Navbar bg="primary" variant="dark">
