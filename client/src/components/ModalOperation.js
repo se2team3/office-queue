@@ -10,7 +10,7 @@ function ModalOperation(props){
     const [code,setCode] = useState(props.operation?props.operation.code:"");
     const [description,setDescription] = useState(props.operation?props.operation.description:"");
     const [multiSelections, setMultiSelections] = useState(props.operation?props.operation.counters.map((n)=>{
-        return {label: n.id.toString(), id: n.id}
+        return {label: n.toString(), id: n}
     }):[]);
 
     function updateCounterOperations(){
