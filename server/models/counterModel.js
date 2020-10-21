@@ -101,9 +101,9 @@ exports.getCounters = function() {
                 console.log(err);
                 reject(err);
             } else {
-                let boards = rows.map((row) => createCounter(row));
-                console.log(boards);
-                resolve(boards);
+                /* let boards = rows.map((row) => createCounter(row));
+                console.log(boards); */
+                resolve(rows);
             }
         });
     });
