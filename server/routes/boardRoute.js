@@ -2,7 +2,6 @@ const express = require('express');
 const queue = require('../models/queueModel');
 const router = express.Router();
 
-
 const log = async(req, res, next) => {
     console.log(req);
     next();

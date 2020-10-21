@@ -41,6 +41,20 @@ exports.retrieveOperation = function({name}) {
     })
 }
 
+exports.hasOperation = function(id) {
+    return new Promise ((resolve,reject) =>{
+        const sql = 'SELECT code FROM Operations WHERE code LIKE ?'
+        db.get(sql, [id], (err, row) => {
+            if(err)
+                return reject(err);
+            if (!row)
+                resolve(false);
+            else
+                resolve(true);
+        });
+    })
+}
+
 exports.deleteOperationsByCounter = function (counter_id) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
