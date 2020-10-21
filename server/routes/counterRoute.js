@@ -4,6 +4,7 @@ const express = require('express');
 const {validator, countersValidation} = require('../validators/validator');
 // import models
 const counters = require('../models/counterModel');
+const counter_operation = require('../models/counter_operationsModel');
 const operations = require('../models/operationModel');
 
 const router = express.Router();
@@ -68,7 +69,7 @@ router.post(`/counters`, countersValidation.checkCounter(), validator, async(req
  */
 router.delete('/counter/:counter_id', async (req,res) => {
     try{
-        await operations.deleteOperationsByCounter(req.params.counter_id);
+        await counter_operation.deleteOperationsByCounter(req.params.counter_id);
         await counters.deleteCounter(req.params.counter_id);
         res.status(204).end();
     }
