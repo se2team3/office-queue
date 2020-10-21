@@ -21,7 +21,7 @@
 - POST `/terminateRequest`
   - Body: ticketId
   - Response: NONE
-- POST `/callNextCustomer`
+- PUT `/callNextCustomer`
   - Body: counterId
   - Response: NONE
 - POST `/createCounter`

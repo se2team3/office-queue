@@ -18,10 +18,11 @@ const baseURL = "/api";
 
  
 
-
+//it asks to the server who is the next customer and it updates the "called" and timeServed fields, 
+//it also inserts the number of the counter that will serve the customer
 async function callNextCustomer(counterId) {
     const response = fetch(baseURL + "/callNextCustomer", {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -37,7 +38,7 @@ async function callNextCustomer(counterId) {
     }
     
 }
-
+//retrieves from the server the counters list
 async function getCounters() {
     const response = await fetch(baseURL + "/counters");
     const countersJson = await response.json();
@@ -49,7 +50,7 @@ async function getCounters() {
         throw err;  // An object with the error coming from the server
     }
 }
-
+//inserts a new counter that is inside the body request
 async function addCounter(counter) {
     let response;
     try {
@@ -76,7 +77,7 @@ async function addCounter(counter) {
     }
     else throw {status: response.status};
 }
-
+//deletes the counter given its id
 async function deleteCounter(counterId) {
     return new Promise((resolve, reject) => {
         fetch(baseURL + "/counter/" + counterId, {
@@ -93,7 +94,7 @@ async function deleteCounter(counterId) {
         }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
     });
 }
-
+//retrieves from the server all the operations
 async function getOperations() {
     const response = await fetch(baseURL + "/operations");
     const operationsJson = await response.json();
@@ -105,7 +106,7 @@ async function getOperations() {
         throw err;  // An object with the error coming from the server
     }
 }
-
+//inserts a new operation
 async function addOperation(operation) {
     let response;
     try {
@@ -132,7 +133,7 @@ async function addOperation(operation) {
     }
     else throw {status: response.status};
 }
-
+//deletes a new operation given its id
 async function deleteOperation(operationId) {
     return new Promise((resolve, reject) => {
         fetch(baseURL + "/operation/" + operationId, {
@@ -149,7 +150,7 @@ async function deleteOperation(operationId) {
         }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
     });
 }
-
+//when a new customer arrives this function will add him in the queue
 async function getTicket(opId) {
     const response = await fetch(baseURL + "/createRequest", {
         method: 'POST',
@@ -166,7 +167,6 @@ async function getTicket(opId) {
         throw err;  // An object with the error coming from the server
     }
 }
-
 
 async function updateCounterOperation(operation,countersList) {
     

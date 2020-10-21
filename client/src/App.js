@@ -38,7 +38,7 @@ class App extends React.Component {
     if (err) {
         if (err.status && err.status === 401) {
             this.setState({authErr: err.errorObj, authUser: null});
-            this.props.history.push("/login");
+            this.props.history.push("/");
         }
 
         if (err.status && err.status === 404) {
@@ -48,7 +48,7 @@ class App extends React.Component {
     }
   }
 
-  getCounters = () => {
+  getCounters = () => {       //retrieves the counters list
     API.getCounters()
         .then((counters)=>{
             this.setState({counters: counters});
@@ -58,7 +58,7 @@ class App extends React.Component {
         });
   }
 
-  getOperations = () => {
+  getOperations = () => {     //retrieves all possible operations, it is required to set up counters to set their operations
     API.getOperations()
         .then((operations)=>{
             this.setState({operations: operations});
@@ -68,7 +68,7 @@ class App extends React.Component {
         });
   }
 
-  updateCounters = (numberOfCounters) => {
+  updateCounters = (numberOfCounters) => {    //updates the counters list
     
     for(let i=0; i < Math.abs(this.state.counters.length-numberOfCounters); i++){
       if(this.state.counters.length<numberOfCounters){
