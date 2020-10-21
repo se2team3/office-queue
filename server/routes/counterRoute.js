@@ -35,7 +35,7 @@ router.get('/counters', (req, res) => {
  * RESPONSE BODY: <empty>
  * RESPONSE CODE: 201 Created or 303 See Other if resource already exists
  */
-router.post(`/counter`, countersValidation.checkCounter(), validator, async(req, res) => {
+router.post(`/counters`, countersValidation.checkCounter(), validator, async(req, res) => {
     const newCounter = {...req.body};
     if (await counters.retrieveCounter(newCounter) !== null)
         return res.status(303).end();

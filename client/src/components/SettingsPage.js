@@ -113,6 +113,8 @@ function OperationsSettings(props){
             key={modalOperation}
             operation={modalOperation}
             availableCounters={props.availableCounters}
+            addOperation={props.addOperation}
+            editOperation={props.editOperation}
         />
     </>;
 }

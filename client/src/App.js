@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   handleErrors(err) {
-    alert(err)
+    alert(""+err.status+err.errorObj)
     if (err) {
         if (err.status && err.status === 401) {
             this.setState({authErr: err.errorObj, authUser: null});
@@ -73,24 +73,42 @@ class App extends React.Component {
     for(let i=0; i < Math.abs(this.state.counters.length-numberOfCounters); i++){
       if(this.state.counters.length<numberOfCounters){
         API.addCounter({id: this.state.counters.length + 1 + i})
-          .then(()=>{this.getCounters()})//TODO not very good probably, no catch, many calls to api
+          .then(()=>{this.getOperations()
+            this.getCounters()})
+          .catch((errorObj) => {
+            this.handleErrors(errorObj);
+        });
       }
       else if(this.state.counters.length>numberOfCounters){
         API.deleteCounter(this.state.counters.length-i)
-        .then(()=>{this.getCounters()})//TODO not very good probably, no catch, many calls to api
+          .then(()=>{this.getOperations()
+            this.getCounters()})
+          .catch((errorObj) => {
+            this.handleErrors(errorObj);
+        });
       }
     }
     
   }
 
   addOperation = (operation) => {
-    API.addOperation(operation);
-    API.updateCounterOperation(operation.code, operation.counters);
+    API.addOperation(operation).then(
+      API.updateCounterOperation(operation.code, operation.counters).then(()=>{
+        this.getOperations()
+        this.getCounters()
+      }
+      ).catch(()=>console.log("ADD OP COUNTER ERR"))
+    ).catch(()=>console.log("ADD OP ERR"))
   }
 
   editOperation = (operation) => {
-    API.editOperation(operation);
-    API.updateCounterOperation(operation.code, operation.counters)
+    API.updateOperation(operation).then(
+      API.updateCounterOperation(operation.code, operation.counters).then(()=>{
+        this.getOperations()
+        this.getCounters()
+      }
+      ).catch(()=>console.log("EDIT OP COUNTER ERR"))
+    ).catch(()=>console.log("EDIT OP ERR"))
   }
 
   render(){
