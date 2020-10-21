@@ -29,13 +29,10 @@ class TotemPage extends React.Component {
         .catch((err) => console.log(err));
     }
     onGetNumberPressed= (code)=>{
-        console.log("Selected code: "+ code);
-        // TODO call API
         API.getTicket(code)
         .then((newTicket) => {
-            this.setState((state) => ({ticket: newTicket}))})
+            this.setState((state) => ({ticket: newTicket, showTicketDialog:true}))})
         .catch((err) => console.log(err));
-        this.setState({showTicketDialog:true});
     }
 
     hideTicketDialog = () => {
