@@ -8,6 +8,27 @@ const operations = require('../models/operationModel');
 
 const router = express.Router();
 
+
+/**
+ * GET
+ * BODY: <empty>
+ * RESPONSE BODY: counters list in json
+ * RESPONSE CODE: 200 all ok or 500 server
+ */
+router.get('/counters', (req, res) => {
+    counters.getCounters()
+        .then((counters) => {
+            res.json(counters);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                errors: [{'msg': err}],
+            });
+        });
+});
+
+
+
 /**
  * POST
  * BODY: {id}
@@ -21,8 +42,6 @@ router.post(`/counter`, countersValidation.checkCounter(), validator, async(req,
     await counters.insertCounter(newCounter);
     return res.status(201).end();
 });
-
-module.exports = router;
 
 /**
  * DELETE
@@ -42,3 +61,5 @@ router.delete('/counter/:counter_id', async (req,res) => {
         })
     }
 });
+
+module.exports = router;

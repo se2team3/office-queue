@@ -2,14 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import {Modal, Button, Form, Col} from "react-bootstrap";
+import API from '../api/API';
 
 function ModalOperation(props){
 
     const [name,setName] = useState(props.operation?props.operation.name:"");
     const [code,setCode] = useState(props.operation?props.operation.code:"");
     const [description,setDescription] = useState(props.operation?props.operation.description:"");
-    const [multiSelections, setMultiSelections] = useState(props.operation?props.operation.counters.map((n)=>{return {label: n.toString(), id: n}}):[]);
+    const [multiSelections, setMultiSelections] = useState(props.operation?props.operation.counters.map((n)=>{
+        return {label: n.id.toString(), id: n.id}
+    }):[]);
 
+    function updateCounterOperations(){
+        let countersId = multiSelections.map((s)=> s.id);
+        console.log(countersId);
+        API.updateCounterOperation(code, countersId)
+        .then((res) => console.log('ok'))
+        .catch((err)=> console.log(err));
+    }
     return (
         <Modal
             show={props.show}
@@ -27,6 +37,7 @@ function ModalOperation(props){
             <Form onSubmit={(event) => {
                 event.preventDefault()
                 props.onHide()
+                updateCounterOperations()
             }}>
                 <Modal.Body>
                     <Form.Group>

@@ -5,7 +5,7 @@ const baseURL = "/api";
 
 //get the list to be shown on the board
  async function getLastCustomers(){
-     const response=await fetch("/api/LastCustomers")
+     const response=await fetch("/api/lastCustomers")
     const object=response.json();
     if(response.ok){
         return object;
@@ -106,5 +106,92 @@ async function getOperations() {
     }
 }
 
-const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations}
+async function addOperation(operation) {
+    let response;
+    try {
+        response = await fetch(baseURL + "/operation", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(operation),
+        });
+    }
+    catch(err){
+        throw({ errors: [{ param: "Server", msg: "Cannot communicate" }] });
+    }
+
+    if(response.ok){
+        try{
+            let responseJson = await response.json();
+            return responseJson.id;
+        }
+        catch(err){
+            throw({ errors: [{ param: "Application", msg: "Cannot parse response" }] });
+        }
+    }
+    else throw {status: response.status};
+}
+
+async function deleteOperation(operationId) {
+    return new Promise((resolve, reject) => {
+        fetch(baseURL + "/operation/" + operationId, {
+            method: 'DELETE'
+        }).then( (response) => {
+            if(response.ok) {
+                resolve(null);
+            } else {
+                // analyze the cause of error
+                response.json()
+                    .then( (obj) => {reject(obj);} ) // error msg in the response body
+                    .catch( (err) => {reject({ errors: [{ param: "Application", msg: "Cannot parse server response" }] }) }); // something else
+            }
+        }).catch( (err) => {reject({ errors: [{ param: "Server", msg: "Cannot communicate" }] }) }); // connection errors
+    });
+}
+
+async function getTicket(opId) {
+    const response = await fetch(baseURL + "/createRequest", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({code: opId}),
+    });
+    const ticketJson = await response.json();
+    if(response.ok){
+        return ticketJson;
+    } else {
+        let err = {status: response.status, errObj:ticketJson};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
+
+async function updateCounterOperation(operation,countersList) {
+    
+    await fetch(baseURL + "/counterOperations/" + operation, {
+        method: 'DELETE'
+    });
+
+/*     console.log('Operation: '+ operation);
+    console.log('counters: '+ countersList); */
+
+    let insertionQueries = countersList.map((c) => fetch(baseURL + "/counterOperations", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({counter_id: c, operation_code: operation}),
+    }))
+    Promise.all([...insertionQueries])
+    .then((res)=> console.log('ok'))
+    .catch((err) => console.log(err));
+
+}
+
+
+const API={getLastCustomers, callNextCustomer, getCounters, addCounter,
+     deleteCounter, getOperations, addOperation, deleteOperation, getTicket, updateCounterOperation}
+
 export default API

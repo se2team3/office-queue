@@ -11,16 +11,25 @@ var demoOperations = [
 
 function SettingsPage(props) {
 
+    const [numberOfCounters, setNumberOfCounters] = useState(props.counters.length); //TODO get from backend
+    const [operations, setOperations] = useState(props.operations); //TODO get from backend
+
     let {getCounters, getOperations} = props;
 
     useEffect(() => {
         getCounters();
         getOperations();
     }, []);
-    
-    const [numberOfCounters, setNumberOfCounters] = useState(props.counters.length); //TODO get from backend
-    const [operations, setOperations] = useState(demoOperations); //TODO get from backend
 
+    useEffect(() => {
+        setNumberOfCounters(props.counters.length)
+    }, [props.counters.length]);
+
+    useEffect(() => {
+        setOperations(props.operations)
+    }, [props.operations]);
+    
+    
     return <Container style={{textAlign: "left"}}>
         <Row>
             <Col>
@@ -36,7 +45,10 @@ function SettingsPage(props) {
         </Row>
         <Row>
             <Col>
-                <Form>
+                <Form onSubmit={(event) => {
+                    event.preventDefault()
+                    props.updateCounters(numberOfCounters)
+                }}>
                     <Form.Group as={Row}>
                         <Col>
                             <Form.Label>How many counter are there in the office?</Form.Label>
@@ -45,7 +57,7 @@ function SettingsPage(props) {
                     </Form.Group>
                     <Form.Group as={Row}>
                         <Col xs="auto" >
-                            <Button variant="success">Save</Button>
+                            <Button type="submit" variant="success">Save</Button>
                         </Col>
                     </Form.Group>
                 </Form>
@@ -58,7 +70,7 @@ function SettingsPage(props) {
         </Row>
         <Row>
             <Col>
-                <OperationsSettings operations={operations} availableCounters={Array.from(Array(numberOfCounters).keys()).map((n)=>{return {label: n.toString(), id: n}})} />
+                <OperationsSettings operations={operations} availableCounters={props.counters.map((n)=>{return {label: n.id.toString(), id: n.id}})} />
             </Col>
         </Row>
     </Container>
@@ -104,7 +116,7 @@ function OperationSettingsRow(props){
     return <tr>
         <td>{props.operation.code}</td>
         <td>{props.operation.name}</td>
-        <td>{props.operation.counters.map((c)=>{return c+" "})}</td>
+        <td>{props.operation.counters.join(" ")}</td>
         <td><Button size="sm" variant="primary" onClick={()=>props.editOperation()} style={{marginLeft: "1px", marginRight: "1px"}}>
                 <Icon.Pencil/>
             </Button>

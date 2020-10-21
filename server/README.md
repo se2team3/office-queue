@@ -8,14 +8,14 @@
   - Response: ticket object (Type - Number in queue)
 - GET `/requests`
   - Param: NONE (TBD if completed is a req. param. or is implemented client side )
-  - Rsponse: List of requests (served)
+  - Response: List of requests (served)
 - GET `/counters`
   - Param: NONE
   - Response: List of all counters
 - GET `/counters/:counterId`
   - Param: counterId
   - Response: Counter object (Id, Operations, Customers in line)
-- GET `/LastCustomers`
+- GET `/lastCustomers`
   - Param: NONE
   - Response: List of the 14 most recent called customers
 - POST `/terminateRequest`
@@ -23,14 +23,17 @@
   - Response: NONE
 - POST `/callNextCustomer`
   - Body: counterId
-  - Response: ticketId <!-- Of called customer -->
+  - Response: NONE
 - POST `/createCounter`
   - Body: List of possible operations (counterId may be obtained by auto-increment of id in DB)
   - Response: Counter object
 - POST `/editCounter`
   - Body: List of possible operations, counterId
   - Response: counter object
-- POST: `/createOperation`
+- POST: `/operation`
+  - Body: Operation object (Code - Name - Possible description)
+  - Response: NONE
+- PUT: `/operation/:operationID`
   - Body: Operation object (Code - Name - Possible description)
   - Response: NONE
 
