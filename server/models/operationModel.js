@@ -3,6 +3,7 @@
 const db = require('./index');
 const Operation = require('./Operation');
 
+//it creates the operations table, an entry has a name and a briefly description
 exports.createOperationsList = function() {
     return new Promise ((resolve,reject) =>{
         const sql = 'CREATE TABLE Operations (code varchar(5) NOT NULL PRIMARY KEY, name varchar(255) NOT NULL, description varchar(255) NOT NULL)'
@@ -15,6 +16,7 @@ exports.createOperationsList = function() {
     })
 }
 
+//it fills the operation table
 exports.insertOperation = function({code, name, description = ""}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'INSERT INTO Operations (code, name, description) VALUES (?, ?, ?)'
@@ -27,6 +29,7 @@ exports.insertOperation = function({code, name, description = ""}) {
     })
 }
 
+//gets the operation with a given name
 exports.retrieveOperation = function({name}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'SELECT code FROM Operations WHERE name LIKE ?'
@@ -41,6 +44,7 @@ exports.retrieveOperation = function({name}) {
     })
 }
 
+//it is used to check if a specific counter can perform a given operation
 exports.hasOperation = function(code) {
     return new Promise ((resolve,reject) =>{
         const sql = 'SELECT code FROM Operations WHERE code LIKE ?'
@@ -55,6 +59,7 @@ exports.hasOperation = function(code) {
     })
 }
 
+//delete an operation given the counter_id
 exports.deleteOperationsByCounter = function (counter_id) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';

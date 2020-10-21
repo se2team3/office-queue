@@ -4,7 +4,7 @@ const db = require('./index');
 const Operation = require('./Operation');
 
 
-
+//delete an operation given the counter_id
 exports.deleteOperationsByCounter = function (counter_id) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
@@ -17,6 +17,7 @@ exports.deleteOperationsByCounter = function (counter_id) {
     });
 }
 
+//assigns an operation to a counter
 exports.insertCounterOperation = function (counter_id, operation_code) {
     console.log(counter_id,operation_code);
 
@@ -31,7 +32,7 @@ exports.insertCounterOperation = function (counter_id, operation_code) {
     });
 }
 
-
+//given a counter it removes an assigned operation 
 exports.deleteCounterOperation = function (counter_id, operation_code) {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM Counters_Operations WHERE counter_id = ? AND operation_code = ?';
