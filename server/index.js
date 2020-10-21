@@ -10,7 +10,6 @@ const CronJob = require('cron').CronJob;
 // import routes
 const counterRouter = require('./routes/counterRoute');
 const queueRouter = require('./routes/queueRoute');
-const boardRouter=require('./routes/boardRoute')
 const operationRouter = require('./routes/operationRoute');
 const counterOperationsRouter = require('./routes/counter_operationRoute');
 
@@ -26,7 +25,6 @@ app.use(cookieParser());
 // set up Routers
 app.use('/api', counterRouter);
 app.use('/api', queueRouter);
-app.use('/api', boardRouter)
 app.use('/api', operationRouter);
 app.use('/api', counterOperationsRouter);
 
