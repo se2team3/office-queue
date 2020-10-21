@@ -3,6 +3,20 @@
 const db = require('./index');
 const Operation = require('./Operation');
 
+
+
+exports.deleteOperationsByCounter = function (counter_id) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM Counters_Operations WHERE counter_id = ?';
+        db.run(query, [counter_id], (err) => {
+            if(err)
+                reject(err);
+            else
+                resolve(null);
+        })
+    });
+}
+
 exports.insertCounterOperation = function (counter_id, operation_code) {
     console.log(counter_id,operation_code);
 
