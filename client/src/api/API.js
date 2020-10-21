@@ -167,6 +167,31 @@ async function getTicket(opId) {
     }
 }
 
-const API={getLastCustomers, callNextCustomer, getCounters, addCounter, deleteCounter, getOperations, addOperation, deleteOperation, getTicket}
+
+async function updateCounterOperation(operation,countersList) {
+    
+    await fetch(baseURL + "/counterOperations/" + operation, {
+        method: 'DELETE'
+    });
+
+/*     console.log('Operation: '+ operation);
+    console.log('counters: '+ countersList); */
+
+    let insertionQueries = countersList.map((c) => fetch(baseURL + "/counterOperations", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({counter_id: c, operation_code: operation}),
+    }))
+    Promise.all([...insertionQueries])
+    .then((res)=> console.log('ok'))
+    .catch((err) => console.log(err));
+
+}
+
+
+const API={getLastCustomers, callNextCustomer, getCounters, addCounter,
+     deleteCounter, getOperations, addOperation, deleteOperation, getTicket, updateCounterOperation}
 
 export default API
