@@ -19,7 +19,7 @@ class CounterScreen extends React.Component {
     } */
 
     onCallNextCustomer= () =>{
-        API.callNextCustomer(this.state.currentTicket)
+        API.callNextCustomer(this.state.counterId)
             .then((nextTicket) => this.setState({currentTicket: nextTicket}))
             .catch((err)=>{
                 // TODO handle error

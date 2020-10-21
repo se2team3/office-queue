@@ -21,12 +21,13 @@ const baseURL = "/api";
 //it asks to the server who is the next customer and it updates the "called" and timeServed fields, 
 //it also inserts the number of the counter that will serve the customer
 async function callNextCustomer(counterId) {
+    console.log(counterId)
     const response = fetch(baseURL + "/callNextCustomer", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(counterId),
+            body: JSON.stringify({counterId:counterId}),
         });
     const ticketJson = await response.json();
     

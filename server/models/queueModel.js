@@ -76,7 +76,8 @@ exports.getLastCustomers = function(){
 }
 
 //this function will call the next customer in order of priority
-exports.callNextCustomer= function(counterId){
+exports.callNextCustomer= function(param){
+    console.log(param)
     return new Promise( (resolve,reject)=>{
         const sql=
        `UPDATE Queue
@@ -103,7 +104,7 @@ exports.callNextCustomer= function(counterId){
                  )
            )`
         
-            db.run(sql,[counterId,counterId],
+            db.run(sql,[param.counterId,param.counterId],
             function(err){
                 if(err){
                     reject(err);

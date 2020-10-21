@@ -38,7 +38,9 @@ router.post(`/createRequest`, async(req, res) => {
  * RESPONSE CODE: 200 all ok or 500 server
  */
 router.put(`/callNextCustomer`,(req,res)=>{
-    queue.callNextCustomer(req.body.counterId)
+    console.log(req.body.counterId)
+    const param={counterId:req.body.counterId}
+    queue.callNextCustomer(param)
     .then(_ => res.status(200).end())
     .catch((err)=>{
         res.status(400).json({
