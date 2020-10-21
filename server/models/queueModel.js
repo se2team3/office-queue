@@ -80,7 +80,7 @@ exports.callNextCustomer= function(param){
     return new Promise( (resolve,reject)=>{
         const sql=
        `UPDATE Queue
-        SET CALLED=1, COUNTER=?, TIME_SERVED= CURRENT_TIMESTAMP'
+        SET CALLED=1, COUNTER=?, TIME_SERVED= datetime('now','localtime')
         WHERE ID IN
            (SELECT ID 
            FROM (SELECT ID, INITIAL_TIME
