@@ -67,7 +67,7 @@ exports.getLastCustomers = function(){
             if(err)
                 reject(err);
             else if(results===undefined || results.length===0){
-                resolve([{}])
+                resolve([])
             } else {
                 resolve(results);
             }

@@ -73,11 +73,10 @@ const t = setInterval(function(){
 *   Disable for now - enable it when the debug is finished
 * */
 //TODO warning unhandled rejection from deleteQueue probably
-/*
+
 //cron library is used to schedule the queue reset, the reset is scheduled every day at midnight
 const job = new CronJob('00 00 * * 0-6', queueModel.deleteQueue()
                         .then(() =>{console.log("Deleted successfully")})
                         .catch((err) =>{console.log("Error" + err)}));
 
 job.start();
-*/
