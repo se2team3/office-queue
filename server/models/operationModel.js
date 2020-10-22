@@ -20,11 +20,13 @@ exports.createOperationsList = function() {
 exports.insertOperation = function({code, name, description = ""}) {
     return new Promise ((resolve,reject) =>{
         const sql = 'INSERT INTO Operations (code, name, description) VALUES (?, ?, ?)'
-        db.run(sql, [code, name, description], (err) => {
+        db.run(sql, [code, name, description], function(err){
             if(err)
                 reject(err);
-            else
-                resolve(null);
+            else{
+                console.log('Inserted row: '+this.lastID);
+                resolve(this.lastID);
+            }
         });
     })
 }

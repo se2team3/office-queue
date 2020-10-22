@@ -35,8 +35,8 @@ router.post(`/operations`, operationsValidation.checkOperation(), validator, asy
     const newOperation = {...req.body};
     if (await operations.retrieveOperation(newOperation) !== null)
         return res.status(303).end();
-    await operations.insertOperation(newOperation);
-    return res.status(201).end();
+    let jsonObj = await operations.insertOperation(newOperation);
+    return res.status(201).json(jsonObj);
 });
 
 /**
