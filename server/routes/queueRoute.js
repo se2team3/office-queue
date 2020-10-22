@@ -35,18 +35,19 @@ router.post(`/createRequest`, async(req, res) => {
  * PUT
  * BODY: <counterId>
  * RESPONSE BODY: 
- * RESPONSE CODE: 200 all ok or 500 server
+ * RESPONSE CODE: 200 all ok or 204 no content
  */
-router.put(`/callNextCustomer`,(req,res)=>{
-    const param={counterId:req.body.counterId}
-    queue.callNextCustomer(param)
-    .then(_ => res.status(200).end())
-    .catch((err)=>{
-        res.status(400).json({
-            errors:[{'msg':err}]
-        });
+router.put(`/callNextCustomer`,async (req,res)=>{
+    const counterID = req.body.counterId;
+    const next = await queue.whoIsNextCustomer(counterID);
+    if (!next)
+        return res.send(204).end();
+    await queue.callNextCustomer(counterID, next["ID"]);
+    res.status(200).json({
+        "code": next["request_type"],
+        "number": next["ticket_number"],
     });
- })
+})
 
  router.get('/lastCustomers',async (req,res)=>{
     const list = await queue.getLastCustomers();

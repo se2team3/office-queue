@@ -135,15 +135,15 @@ exports.hasCounter = function(counter_id) {
 exports.getCounter = function(counter_id) {
     console.log(counter_id);
     return new Promise((resolve, reject) => {
-        const query = ` SELECT operation_code
-                        FROM Counters_Operations
-                        WHERE counter_id = ?`;
+        const query = ` SELECT code, name, description
+                        FROM Counters_Operations co, Operations o
+                        WHERE counter_id = ? AND co.operation_code = o.code`;
         db.all(query, [counter_id], (err, rows) => {
             if (err) {
                 console.log(err);
                 reject(err);
             } else {
-                resolve(rows.map(r => r["operation_code"]));
+                resolve(rows);
             }
         });
     });

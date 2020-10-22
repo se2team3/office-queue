@@ -55,9 +55,9 @@ class Board extends React.Component{
                         let b=moment(e.time_served,"YYYY-MM-DD hh:mm:ss");
                         let c=a.diff(b,'seconds');
                         return (
-                                <tr key={e.counter+e.id}>
+                                <tr key={e.counter+e.ticket_number}>
                                     {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{e.counter}</td> :<td>{e.counter}</td> }
-                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type} ${e.id}`}</td> :<td>{`${e.request_type} ${e.id}`}</td> }
+                                    {c<=30 ?<td style={{"background-color":"#a8f7b8"}}>{`${e.request_type} ${e.ticket_number}`}</td> :<td>{`${e.request_type} ${e.ticket_number}`}</td> }
                                     
                                 </tr>
                                 
