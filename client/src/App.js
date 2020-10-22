@@ -135,7 +135,14 @@ class App extends React.Component {
         <Router>
           <Switch>
             {/* TODO missing navbar in counter screen -->*/}
-            <Route path="/counter/:counter_id" component={CounterScreen}/>
+            <Route path="/counter/:counter_id" render={(props)=>
+              <>
+                <Navbar bg="primary" variant="dark">
+                  <Navbar.Brand href="#home">Office Queue</Navbar.Brand>
+                </Navbar>
+                <CounterScreen counter_id={props.match.params.counter_id}/>
+              </>
+            }/>
             
             <Route path="/board">
               <Board></Board>

@@ -2,51 +2,33 @@ import React from 'react';
 import { Button, Row, Alert, Col } from "react-bootstrap";
 import API from '../api/API';
 
-class CounterScreen extends React.Component {
+var demoOperations = [
+    {code: "Y", name: "Yoga", description: "Yoga sessions outdoor and indoor", counters: [1, 2, 3, 4, 8, 12]},
+    {code: "P", name: "Payments", description: "Everything concerning money", counters: [1, 2, 4, 5]},
+    {code: "S", name: "Services", description: "Services for customer of services", counters: [1, 3, 4, 8, 12]}
+]
 
-    //TODO dynamically bind counter information
-    constructor(props){
-        super();
-        this.state = {counterId: props.match.params.counter_id, currentTicket: {}};
+function CounterScreen(props) {
+
+    var operations = demoOperations
+
+    function onCallNext(){
+        console.log(API.callNextCustomer(props.counter_id));
     }
 
-    /* componentDidMount(){
-        API.getCounter(this.state.counterId)
-        .then((counter)=> this.setState({counter: counter}))
-        .catch((err)=>{
-            // HANDLE ERROR
-        });
-    } */
-
-    onCallNextCustomer= () =>{
-        API.callNextCustomer(this.state.counterId)
-            .then((nextTicket) => this.setState({currentTicket: nextTicket}))
-            .catch((err)=>{
-                // TODO handle error
-            });
-    }
-
-    render() {
-        return (
-            <Col className="justify-content-md-center" style={{textAlign: "center"}}>
-                <h1>{`Counter ${this.state.counterId}`}</h1>
-                <p>
-                    This counter is currently serving the following operations: Payments, Accounts, Banking
-                    Related, Yoga
-                </p>
-                <Row className="justify-content-md-center">
-                        <Alert variant="warning" dismissible={true}>
-                            <b>There are 42 customers in line!</b> For the operation offered by this counter!
-                        </Alert>
-                </Row>
-                <br></br>
-                <Button variant="success" onClick={this.onCallNextCustomer}>{`Call next customer ${this.state.currentTicket.id}`}</Button>
-            </Col>
-            
-        )
-    }
-
-
+    return (
+        <Col className="justify-content-md-center" style={{textAlign: "center"}}>
+            <h1>{`Counter ${props.counter_id}`}</h1>
+            <p>
+    This counter is currently serving the following operations: {operations.map((o)=> <><br/><b>{o.name}</b></>)}
+            </p>
+            <br/>
+            {/*<Alert variant="success">Called customer ...</Alert>
+            <Alert variant="warning">No customer in line right now</Alert>*/}
+            <Button variant="success" onClick={onCallNext}>Call next customer</Button>
+        </Col>
+        
+    )
 
 }
 
