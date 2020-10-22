@@ -132,7 +132,7 @@ async function addOperation(operation) {
     if(response.ok){
         try{
             let responseJson = await response.json();
-            return responseJson.id;
+            return responseJson;
         }
         catch(err){
             throw({ errors: [{ param: "Application", msg: "Cannot parse response" }] });
