@@ -26,8 +26,12 @@ function CounterScreen(props) {
     This counter is currently serving the following operations: {counter&&counter.operations.map((o)=> <><br/><b>{o.name}</b></>)}
             </p>
             <br/>
-            {lastCustomer&&("code" in lastCustomer)&&<Alert variant="success">Called customer {lastCustomer.code} {lastCustomer.number}</Alert>}
-            {lastCustomer&&(!("code" in lastCustomer))&&<Alert variant="warning">No customer found in line right now, try later</Alert>}
+            <Row className="justify-content-md-center">
+                <Col xs="auto">
+                    {lastCustomer&&("code" in lastCustomer)&&<Alert variant="success">Called customer {lastCustomer.code} {lastCustomer.number}</Alert>}
+                    {lastCustomer&&(!("code" in lastCustomer))&&<Alert variant="warning">No customer found in line right now, try later</Alert>}
+                </Col>
+            </Row>
             <Button variant="success" onClick={onCallNext}>Call next customer</Button>
         </Col>
         
