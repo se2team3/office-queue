@@ -3,12 +3,9 @@
 const db = require('./index');
 const Counter = require('./Counter');
 
-const createCounter = function (row){
-    operations = []
-    if(row.operations){
-        operations = row.operations
-    }
-    return new Counter(row.ID, operations);
+const createCounterWithOperations = function (row){
+    operations = [ {code: row.code, name: row.name, description: row.description} ]
+    return new Counter(row.counter_id, operations);
 }
 
 //it creates the counter table in the database
@@ -135,7 +132,7 @@ exports.hasCounter = function(counter_id) {
 exports.getCounter = function(counter_id) {
     console.log(counter_id);
     return new Promise((resolve, reject) => {
-        const query = ` SELECT code, name, description
+        const query = ` SELECT counter_id, code, name, description
                         FROM Counters_Operations co, Operations o
                         WHERE counter_id = ? AND co.operation_code = o.code`;
         db.all(query, [counter_id], (err, rows) => {
@@ -143,36 +140,16 @@ exports.getCounter = function(counter_id) {
                 console.log(err);
                 reject(err);
             } else {
-                resolve(rows);
-            }
-        });
-    });
-}
-
-
-/**
- * Get a counter with a given id WIP
- */
-exports.getCounter_ = function(counter_id){
-    return new Promise((resolve, reject) => {
-        let query = `SELECT id, .................................
-                       FROM Counters as c, Counters_Operations as co, Operations as o
-                       WHERE c.id = co.counter_id AND co.operation_code = o.code`
-
-        db.all(query, [], (err, rows) => {
-            if (err) {
-                reject(err);
-            } else {
                 // put list of operations inside counter object
-                let cards = rows.map((row) => createCardOptionalLink(row)).reduce((acc, cur)=>{
-                    const cardInd = acc.findIndex(el => el.id === cur.id);
-                    if(cardInd>=0)
-                        acc[cardInd].interestingLinks = acc[cardInd].interestingLinks.concat(cur.interestingLinks);
+                let counters = rows.map((row) => createCounterWithOperations(row)).reduce((acc, cur)=>{
+                    const counterInd = acc.findIndex(el => el.counter_id === cur.counter_id);
+                    if(counterInd>=0)
+                        acc[counterInd].operations = acc[counterInd].operations.concat(cur.operations);
                     else
                         acc.push(cur);
                     return acc;
                 }, []);
-                resolve(cards);
+                resolve(counters[0]);
             }
         });
     });

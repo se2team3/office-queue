@@ -40,11 +40,8 @@ router.get('/counters/:counter_id', async (req, res) => {
     console.log(counterId);
     if (!await counters.hasCounter(counterId))
         return res.status(404).end();
-    const operations = await counters.getCounter(counterId);
-    return res.status(200).json({
-        id: counterId,
-        operations: [...operations],
-    });
+    const counter = await counters.getCounter(counterId);
+    return res.status(200).json(counter);
 });
 
 /**

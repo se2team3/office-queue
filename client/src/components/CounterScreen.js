@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Row, Alert, Col } from "react-bootstrap";
 import API from '../api/API';
 
-var demoOperations = [
-    {code: "Y", name: "Yoga", description: "Yoga sessions outdoor and indoor", counters: [1, 2, 3, 4, 8, 12]},
-    {code: "P", name: "Payments", description: "Everything concerning money", counters: [1, 2, 4, 5]},
-    {code: "S", name: "Services", description: "Services for customer of services", counters: [1, 3, 4, 8, 12]}
-]
-
 function CounterScreen(props) {
 
-    var operations = demoOperations
+    const [lastCustomer, setLastCustomer] = useState(null);
+    const [counter, setCounter] = useState(null);
+
+    useEffect(()=>{
+        API.getCounter(props.counter_id)
+            .then((c)=>{
+                setCounter(c);
+            })
+    },[]);
 
     function onCallNext(){
-        console.log(API.callNextCustomer(props.counter_id));
+        API.callNextCustomer(props.counter_id)
+            .then((obj)=>setLastCustomer(obj))
     }
 
     return (
         <Col className="justify-content-md-center" style={{textAlign: "center"}}>
             <h1>{`Counter ${props.counter_id}`}</h1>
             <p>
-    This counter is currently serving the following operations: {operations.map((o)=> <><br/><b>{o.name}</b></>)}
+    This counter is currently serving the following operations: {counter&&counter.operations.map((o)=> <><br/><b>{o.name}</b></>)}
             </p>
             <br/>
-            {/*<Alert variant="success">Called customer ...</Alert>
-            <Alert variant="warning">No customer in line right now</Alert>*/}
+            {lastCustomer&&("code" in lastCustomer)&&<Alert variant="success">Called customer {lastCustomer.code} {lastCustomer.number}</Alert>}
+            {lastCustomer&&(!("code" in lastCustomer))&&<Alert variant="warning">No customer found in line right now, try later</Alert>}
             <Button variant="success" onClick={onCallNext}>Call next customer</Button>
         </Col>
         

@@ -22,19 +22,20 @@ const baseURL = "/api";
 //it asks to the server who is the next customer and it updates the "called" and timeServed fields, 
 //it also inserts the number of the counter that will serve the customer
 async function callNextCustomer(counterId) {
-    const response = fetch(baseURL + "/callNextCustomer", {
+    const response = await fetch(baseURL + "/callNextCustomer", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({counterId:counterId}),
         });
-    const ticketJson = await response.json();
-    
-    if(response.ok){
-        return ticketJson; // or Ticket.fromJson()
+
+    if(response.status==200){
+        return response.json();
+    }else if(response.status==204){
+        return {};
     }else{
-        let err = { status: response.status, errObj: ticketJson };
+        let err = { status: response.status, errObj: response.json() };
         throw err;  // An object with the error coming from the server
     }
     
@@ -51,6 +52,19 @@ async function getCounters() {
         throw err;  // An object with the error coming from the server
     }
 }
+
+async function getCounter(counter_id) {
+    let url = "/counters/"+counter_id;
+    const response = await fetch(baseURL + url);
+    if(response.ok){
+        const counterJson = await response.json();
+        return counterJson;
+    } else {
+        let err = {status: response.status};
+        throw err;  // An object with the error coming from the server
+    }
+}
+
 //inserts a new counter that is inside the body request
 async function addCounter(counter) {
     let response;
@@ -206,7 +220,7 @@ async function updateCounterOperation(operation,countersList) {
 }
 
 
-const API={getLastCustomers, callNextCustomer, getCounters, addCounter,
+const API={getLastCustomers, callNextCustomer, getCounters, getCounter, addCounter,
      deleteCounter, getOperations, addOperation, updateOperation, deleteOperation, getTicket,
      updateCounterOperation}
 
