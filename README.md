@@ -1,9 +1,9 @@
 # README #
 
-Test push.
-asd
-Test push - dario
-Test push - federico
+[![Build Status](https://travis-ci.org/se2team3/office-queue.svg?branch=master)](https://travis-ci.org/se2team3/office-queue)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=code_smells)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=sqale_index)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
