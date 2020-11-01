@@ -4,6 +4,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=code_smells)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=sqale_index)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=se2team3_office-queue&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=se2team3_office-queue)
+[![codecov](https://codecov.io/gh/se2team3/office-queue/branch/master/graph/badge.svg?token=MAVH9XIPEA)](https://codecov.io/gh/se2team3/office-queue)
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
