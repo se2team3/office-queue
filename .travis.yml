@@ -1,4 +1,9 @@
 language: node_js
 node_js:
-  - 12
-script: cd client ; npm install ; npm test
+  - 14
+script: 
+  - cd client ; npm install
+  - npm test
+  - cd ..
+  - cd server ; npm install
+  - npm test
