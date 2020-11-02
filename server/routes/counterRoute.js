@@ -19,7 +19,9 @@ const router = express.Router();
 router.get('/counters', (req, res) => {
     counters.getCounters()
         .then((counters) => {
+            console.log(counters)
             res.json(counters);
+            
         })
         .catch((err) => {
             res.status(500).json({
@@ -38,11 +40,13 @@ router.get('/counters', (req, res) => {
 router.get('/counters/:counter_id', async (req, res) => {
     const counterId = req.params.counter_id;
     console.log(counterId);
-    if (!await counters.hasCounter(counterId))
-        return res.status(404).end();
+    if (!await counters.hasCounter(counterId)){
+        return res.status(404).end();}
     const counter = await counters.getCounter(counterId);
     return res.status(200).json(counter);
 });
+
+
 
 /**
  * POST
