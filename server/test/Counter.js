@@ -1,16 +1,14 @@
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-let db= require("../models/index")
-let counterModel= require("../models/counterModel")
+const chaiHttp = require("chai-http")
 
-
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../routes/counterRoute');
-let should = chai.should();
-
+const chai = require('chai');
+const server = require('../index'); 
+const should = chai.should();
 chai.use(chaiHttp);
+const expect = chai.expect;
+
 
 /*describe('counterModels', () => {
     beforeEach((done) => { //Before each test we empty the database
@@ -22,14 +20,15 @@ chai.use(chaiHttp);
   * Test the /GET route
   */
  describe('/GET counter with ID', () => {
-    it('it should GET counter with ID specified', async ()=>{
-     result=await chai.request(server).get('/counters/1')
-     result.should.have.status(200);     
-     /*.then((err, res) => {
+    it('it should GET counter with ID specified',  (done)=>{
         
-        
-    done();
-  });*/
+
+     chai.request(server).get('/api/counters/1')
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+
           
     });
 });

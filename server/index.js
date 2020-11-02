@@ -80,3 +80,5 @@ const job = new CronJob('00 00 * * 0-6', queueModel.deleteQueue()
                         .catch((err) =>{console.log("Error" + err)}));
 
 job.start();
+
+module.exports=app;

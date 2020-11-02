@@ -43,8 +43,6 @@ router.get('/counters/:counter_id', async (req, res) => {
     if (!await counters.hasCounter(counterId)){
         return res.status(404).end();}
     const counter = await counters.getCounter(counterId);
-    console.log(counter)
-    console.log(res.status)
     return res.status(200).json(counter);
 });
 
