@@ -44,3 +44,16 @@ exports.deleteCounterOperation = function (operation_code) {
         })
     });
 }
+
+//test purposes
+exports.resetCounterOperation = function (operation_code) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM Counters_Operations';
+        db.run(query, [operation_code], (err) => {
+            if(err)
+                reject(err);
+            else
+                resolve(null);
+        })
+    });
+}

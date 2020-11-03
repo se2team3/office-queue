@@ -146,3 +146,20 @@ exports.deleteOperation = function (operation_code) {
         })
     });
 }
+
+// test purposes !
+const counter_operationsModel = require('./counter_operationsModel');
+exports.resetOperations = async function () {
+    await counter_operationsModel.resetCounterOperation();
+    return new Promise((resolve, reject) => {
+        const query = `DELETE FROM Operations`;
+        db.run(query, [], (err) => {
+            if(err){
+                console.log(err);
+                reject(err);
+            }
+            else
+                resolve(null);
+        })
+    });
+}
