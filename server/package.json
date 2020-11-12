@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "SET NODE_ENV=dev && nodemon index.js",
+    "start": "export NODE_ENV=dev && nodemon index.js",
     "test": "nyc --reporter=lcov mocha --exit --timeout 10000"
   },
   "repository": {
